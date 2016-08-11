@@ -394,7 +394,7 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
 });
 
 function handleUserGuess(userGaveUp) {
-    var answerSlotValid = isAnswerSlotValid(this.event.intent);
+    var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
     var speechOutput = '';
     var speechOutputAnalysis = '';
     var gameQuestions = this.attributes.questions;
@@ -403,8 +403,8 @@ function handleUserGuess(userGaveUp) {
     var currentQuestionIndex = parseInt(this.attributes.currentQuestionIndex);
     var correctAnswerText = this.attributes.correctAnswerText;
 
-    if (answerSlotValid && parseInt(this.event.intent.slots.Answer.value) == this.attributes['correctAnswerIndex']) {
-        this.attributes['score']++;
+    if (answerSlotValid && parseInt(this.event.request.intent.slots.Answer.value) == this.attributes['correctAnswerIndex']) {
+        currentScore++;
         speechOutputAnalysis = "correct. ";
     } else {
         if (!userGaveUp) {
