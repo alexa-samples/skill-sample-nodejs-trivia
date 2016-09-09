@@ -65,7 +65,7 @@ var languageString = {
 };
 
 var Alexa = require('alexa-sdk');
-var APP_ID = undefined;  // OPTIONAL: replace with your app ID;
+var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
@@ -258,8 +258,6 @@ function handleUserGuess(userGaveUp) {
 function populateGameQuestions(translatedQuestions) {
     var gameQuestions = [];
     var indexList = [];
-    //var translatedQuestions = this.t("QUESTIONS");
-
     var index = translatedQuestions.length;
 
     if (GAME_LENGTH > index){
@@ -290,10 +288,8 @@ function populateGameQuestions(translatedQuestions) {
  * only ANSWER_COUNT will be selected.
  * */
 function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAnswerTargetLocation, translatedQuestions) {
-    //var translatedQuestions = this.t("QUESTIONS");
     var answers = [];
     var answersCopy = translatedQuestions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(translatedQuestions[gameQuestionIndexes[correctAnswerIndex]])[0]].slice();
-
     var index = answersCopy.length;
 
     if (index < ANSWER_COUNT) {
