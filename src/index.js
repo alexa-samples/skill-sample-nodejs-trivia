@@ -15,18 +15,18 @@ var languageString = {
             "QUESTIONS" : questions["QUESTIONS_EN_GB"],
             "GAME_NAME" : "British Reindeer Trivia", // Be sure to change this for your skill.
             "HELP_MESSAGE": "I will ask you %s multiple choice questions. Respond with the number of the answer. " +
-                            "For example, say one, two, three, or four. To start a new game at any time, say, start game. " +
-                            "To repeat help information, say, repeat. Would you like to keep playing?",
-            "HELP_REPROMPT": "To give an answer to a question, respond with the number of the answer . "
-                            + "Would you like to keep playing?",
+            "For example, say one, two, three, or four. To start a new game at any time, say, start game. ",
+            "REPEAT_QUESTION_MESSAGE": "To repeat the last question, say, repeat. ",
+            "ASK_MESSAGE_START": "Would you like to start playing?",
+            "HELP_REPROMPT": "To give an answer to a question, respond with the number of the answer. ",
             "STOP_MESSAGE": "Would you like to keep playing?",
             "CANCEL_MESSAGE": "Ok, let\'s play again soon.",
             "NO_MESSAGE": "Ok, we\'ll play another time. Goodbye!",
             "TRIVIA_UNHANDLED": "Try saying a number between 1 and %s",
             "HELP_UNHANDLED": "Say yes to continue, or no to end the game.",
+            "START_UNHANDLED": "Say start to start a new game.",
             "NEW_GAME_MESSAGE": "Welcome to %s. ",
-            "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. " +
-                               "Just say the number of the answer. Let\'s begin. ",
+            "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. Just say the number of the answer. Let\'s begin. ",
             "ANSWER_CORRECT_MESSAGE": "correct. ",
             "ANSWER_WRONG_MESSAGE": "wrong. ",
             "CORRECT_ANSWER_MESSAGE": "The correct answer is %s: %s. ",
@@ -34,25 +34,24 @@ var languageString = {
             "TELL_QUESTION_MESSAGE": "Question %s. %s ",
             "GAME_OVER_MESSAGE": "You got %s out of %s questions correct. Thank you for playing!",
             "SCORE_IS_MESSAGE": "Your score is %s. "
-    }
+        }
     },
     "en-US": {
         "translation": {
             "QUESTIONS" : questions["QUESTIONS_EN_US"],
             "GAME_NAME" : "American Reindeer Trivia", // Be sure to change this for your skill.
             "HELP_MESSAGE": "I will ask you %s multiple choice questions. Respond with the number of the answer. " +
-            "For example, say one, two, three, or four. To start a new game at any time, say, start game. " +
-            "To repeat the last question, say, repeat. Would you like to keep playing?",
-            "HELP_REPROMPT": "To give an answer to a question, respond with the number of the answer . "
-            + "Would you like to keep playing?",
+            "For example, say one, two, three, or four. To start a new game at any time, say, start game. ",
+            "REPEAT_QUESTION_MESSAGE": "To repeat the last question, say, repeat. ",
+            "ASK_MESSAGE_START": "Would you like to start playing?",
+            "HELP_REPROMPT": "To give an answer to a question, respond with the number of the answer. ",
             "STOP_MESSAGE": "Would you like to keep playing?",
             "CANCEL_MESSAGE": "Ok, let\'s play again soon.",
             "NO_MESSAGE": "Ok, we\'ll play another time. Goodbye!",
             "TRIVIA_UNHANDLED": "Try saying a number between 1 and %s",
             "HELP_UNHANDLED": "Say yes to continue, or no to end the game.",
             "NEW_GAME_MESSAGE": "Welcome to %s. ",
-            "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. " +
-            "Just say the number of the answer. Let\'s begin. ",
+            "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. Just say the number of the answer. Let\'s begin. ",
             "ANSWER_CORRECT_MESSAGE": "correct. ",
             "ANSWER_WRONG_MESSAGE": "wrong. ",
             "CORRECT_ANSWER_MESSAGE": "The correct answer is %s: %s. ",
@@ -60,6 +59,32 @@ var languageString = {
             "TELL_QUESTION_MESSAGE": "Question %s. %s ",
             "GAME_OVER_MESSAGE": "You got %s out of %s questions correct. Thank you for playing!",
             "SCORE_IS_MESSAGE": "Your score is %s. "
+        }
+    },
+    "de-DE": {
+        "translation": {
+            "QUESTIONS" : questions["QUESTIONS_DE_DE"],
+            "GAME_NAME" : "Wissenswertes über Rentiere in Deutsch", // Be sure to change this for your skill.
+            "HELP_MESSAGE": "Ich stelle dir %s Multiple-Choice-Fragen. Antworte mit der Zahl, die zur richtigen Antwort gehört. " +
+            "Sage beispielsweise eins, zwei, drei oder vier. Du kannst jederzeit ein neues Spiel beginnen, sage einfach „Spiel starten“. ",
+            "REPEAT_QUESTION_MESSAGE": "Wenn die letzte Frage wiederholt werden soll, sage „Wiederholen“ ",
+            "ASK_MESSAGE_START": "Möchten Sie beginnen?",
+            "HELP_REPROMPT": "Wenn du eine Frage beantworten willst, antworte mit der Zahl, die zur richtigen Antwort gehört. Möchtest du weiterspielen?",
+            "STOP_MESSAGE": "Möchtest du weiterspielen?",
+            "CANCEL_MESSAGE": "OK, dann lass uns bald mal wieder spielen.",
+            "NO_MESSAGE": "OK, spielen wir ein andermal. Auf Wiedersehen!",
+            "TRIVIA_UNHANDLED": "Sagt eine Zahl beispielsweise zwischen 1 und %s",
+            "HELP_UNHANDLED": "Sage ja, um fortzufahren, oder nein, um das Spiel zu beenden.",
+            "NEW_GAME_MESSAGE": "Willkommen bei %s. ",
+            "WELCOME_MESSAGE": "Ich stelle dir %s Fragen und du versuchst, so viele wie möglich richtig zu beantworten. " +
+            "Sage einfach die Zahl, die zur richtigen Antwort passt. Fangen wir an. ",
+            "ANSWER_CORRECT_MESSAGE": "Richtig. ",
+            "ANSWER_WRONG_MESSAGE": "Falsch. ",
+            "CORRECT_ANSWER_MESSAGE": "Die richtige Antwort ist %s: %s. ",
+            "ANSWER_IS_MESSAGE": "Diese Antwort ist ",
+            "TELL_QUESTION_MESSAGE": "Frage %s. %s ",
+            "GAME_OVER_MESSAGE": "Du hast %s von %s richtig beantwortet. Danke fürs Mitspielen!",
+            "SCORE_IS_MESSAGE": "Dein Ergebnis ist %s. "
         }
     }
 };
@@ -80,16 +105,27 @@ var newSessionHandlers = {
     /**
      * Entry point. Start a new game on new session. Handle any setup logic here.
      */
-    "NewSession": function () {
+    'LaunchRequest': function () {
         this.handler.state = GAME_STATES.START;
         this.emitWithState("StartGame", true);
+    },
+    'AMAZON.StartOverIntent': function() {
+        this.handler.state = GAME_STATES.START;
+        this.emitWithState("StartGame", true);
+    },
+    'AMAZON.HelpIntent': function() {
+        this.handler.state = GAME_STATES.HELP;
+        this.emitWithState('helpTheUser', true);
+    },
+    'Unhandled': function () {
+        var speechOutput = this.t("START_UNHANDLED");
+        this.emit(":ask", speechOutput, speechOutput);
     }
 };
 
 var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
     "StartGame": function (newGame) {
-        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) : "";
-        speechOutput += this.t("WELCOME_MESSAGE", GAME_LENGTH.toString());
+        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) : "";
         // Select GAME_LENGTH questions for the game
         var translatedQuestions = this.t("QUESTIONS");
         var gameQuestions = populateGameQuestions(translatedQuestions);
@@ -140,7 +176,7 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
     },
     "AMAZON.HelpIntent": function () {
         this.handler.state = GAME_STATES.HELP;
-        this.emitWithState("helpTheUser");
+        this.emitWithState("helpTheUser", false);
     },
     "AMAZON.StopIntent": function () {
         this.handler.state = GAME_STATES.HELP;
@@ -160,20 +196,32 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
 });
 
 var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
-    "helpTheUser": function () {
-        var speechOutput = this.t("HELP_MESSAGE", GAME_LENGTH);
-        var repromptText = this.t("HELP_REPROMPT");
+    "helpTheUser": function (newGame) {
+        var askMessage = newGame ? this.t("ASK_MESSAGE_START") : this.t("REPEAT_QUESTION_MESSAGE") + this.t("STOP_MESSAGE");
+        var speechOutput = this.t("HELP_MESSAGE", GAME_LENGTH) + askMessage;
+        var repromptText = this.t("HELP_REPROMPT") + askMessage;
         this.emit(":ask", speechOutput, repromptText);
     },
+    'AMAZON.StartOverIntent': function () {
+        this.handler.state = GAME_STATES.START;
+        this.emitWithState('StartGame', false);
+    },
     "AMAZON.RepeatIntent": function () {
-        this.emitWithState("helpTheUser");
+        var newGame = (this.attributes['speechOutput'] && this.attributes['repromptText']) ? false : true;
+        this.emitWithState("helpTheUser", newGame);
     },
     "AMAZON.HelpIntent": function() {
-        this.emitWithState("helpTheUser");
+        var newGame = (this.attributes['speechOutput'] && this.attributes['repromptText']) ? false : true;
+        this.emitWithState("helpTheUser", newGame);
     },
     "AMAZON.YesIntent": function() {
-        this.handler.state = GAME_STATES.TRIVIA;
-        this.emitWithState("AMAZON.RepeatIntent");
+        if (this.attributes['speechOutput'] && this.attributes['repromptText']) {
+            this.handler.state = GAME_STATES.TRIVIA;
+            this.emitWithState('AMAZON.RepeatIntent');
+        } else {
+            this.handler.state = GAME_STATES.START;
+            this.emitWithState('StartGame', false);
+        }
     },
     "AMAZON.NoIntent": function() {
         var speechOutput = this.t("NO_MESSAGE");
