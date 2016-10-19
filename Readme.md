@@ -2,7 +2,7 @@
 
 The template leverages [AWS Lambda](https://aws.amazon.com/lambda/), the [Alexa Skills Kit (ASK)](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit), and the [ASK SDK](https://developer.amazon.com/public/community/post/Tx213D2XQIYH864/Announcing-the-Alexa-Skills-Kit-for-Node-js), while providing the business logic, multiple language support, use cases, error handling and help functions for your skill. You just need to come up with a content idea (like "Santa Claus Trivia"), plug in your content and edit the sample provided (we walk you through how it’s done). It's a valuable way to quickly learn the end-to-end process for building and publishing an Alexa skill.
 
-This tutorial will walk first-time Alexa skills developers through all the required steps involved in creating a skill using this how-to skill template, called ‘Reindeer Trivia’. This post assumes you have some familiarity with JavaScript/Node.js (or a similar programming language) and the Alexa Skills Kit.
+This tutorial will walk first-time Alexa skills developers through all the required steps involved in creating a skill using this trivia skill template, called ‘Reindeer Trivia’. This post assumes you have some familiarity with JavaScript/Node.js (or a similar programming language) and the Alexa Skills Kit.
 
 Using the Alexa Skills Kit, you can build an application that can receive and respond to voice requests made on the Alexa platform.  In this tutorial, you’ll build a web service to handle notifications from Alexa and map this service to a skill in the Amazon Developer Portal, making it available on your device and to all Alexa users after certification.
 
@@ -104,7 +104,7 @@ Next we will configure the AWS Lambda function that will host the logic for our 
 
 ### Installing and Working with the Alexa Skills Kit SDK for Node.js (alexa-sdk)
 
-To make the development of skills easier, we have created the Alexa SDK for Node.js. We will be using this module to deploy the sample. The The Alexa SDK is available on [Github](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs) and can be deployed as a Node package from within your Node.js environment.
+To make the development of skills easier, we have created the Alexa SDK for Node.js. We will be using this module to deploy the sample. The Alexa SDK is available on [Github](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs) and can be deployed as a Node package from within your Node.js environment.
 
  1. First, you will need to download the sample repository
     * On GitHub, navigate to the [Trivia skill repository](https://github.com/alexa/skill-sample-nodejs-trivia). Click download (the green button) to download the repository to your local machine.
@@ -241,7 +241,7 @@ AWS Lambda lets you run code without provisioning or managing servers. You pay o
 
    Everything else can stay as-is for now in the Developer Portal
 
- 2. Open the source file for your Lambda function, index.js, in an editor of your choice. This is in the src directory of the repository you downloaded earlier. Look for corresponding locale strings in languageStrings object. "Ctrl-F" **en-US** for English(U.S.), **en-GB** for English(U.K.) and **de-DE** for German. You will see all stings defined for current language in the Reindeer Trivia example. **Note**: **'%s'** in the string represents code logic variable.
+ 2. Open the source file for your Lambda function, index.js, in an editor of your choice. This is in the src directory of the repository you downloaded earlier. Look for corresponding locale strings in languageStrings object. "Ctrl-F" **en-US** for English(U.S.), **en-GB** for English(U.K.) and **de-DE** for German. You will see all strings defined for current language in the Reindeer Trivia example. **Note**: **'%s'** in the string represents code logic variable.
 ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/index.PNG)
 
  3. Change the GAME_NAME variable to the name of your skill.
@@ -262,9 +262,9 @@ Simply replace the reindeer questions with yours in current language.
  ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/changeAppId.PNG)
 
 
- 6. Copy the Application Id into the value of the APP_ID variable in index.js.
+ 6. Copy the Application Id into the value of the APP_ID variable in index.js. 
  ```JSON
- var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
+ var APP_ID = undefined;  // TODO replace with your app ID.
  ```
 
  7. A minimum of 20 questions is needed to get started, but about 100 is a good number to keep users engaged. The more the better.
