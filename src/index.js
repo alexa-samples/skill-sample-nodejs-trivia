@@ -237,8 +237,7 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
         this.emit(":ask", speechOutput, speechOutput);
     },
     "AMAZON.CancelIntent": function () {
-        this.handler.state = GAME_STATES.TRIVIA;
-        this.emitWithState("AMAZON.RepeatIntent");
+        this.emit(":tell", this.t("CANCEL_MESSAGE"));
     },
     "Unhandled": function () {
         var speechOutput = this.t("HELP_UNHANDLED");
