@@ -11,7 +11,7 @@
 'use strict';
 
 const Alexa = require('alexa-sdk');
-const questions = require('./question');
+const questions = require('./questions');
 
 const GAME_NAME = 'Reindeer Trivia'; // TODO Be sure to change this for your skill.
 const ANSWER_COUNT = 4; // The number of possible answers per trivia question.
