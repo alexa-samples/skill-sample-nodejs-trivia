@@ -459,7 +459,7 @@ For other publishing information:
 
    Once you have uploaded your icons, you should see a success message at the bottom of the screen. Finally, **select Next**.
 
-4. (Optional) For multi-language skills, once you finish and save publishing information for your initial language, you will need to do it again for your second language. Under your second language tab, select publishing infomation, and add additional publishing region(s) to the global fields and all other customer facing information in non-global fields.
+ 4. (Optional) For multi-language skills, once you finish and save publishing information for your initial language, you will need to do it again for your second language. Under your second language tab, select publishing infomation, and add additional publishing region(s) to the global fields and all other customer facing information in non-global fields.
 
 ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/publishing_de.png)
 
@@ -467,13 +467,13 @@ For other publishing information:
 
  5.  Privacy and Compliance. On the Privacy and Compliance section, select ‘No’ for spending real money, collecting personal information and children restriction. Privacy and Terms URL’s are optional. Choose to certify that your skill can be imported to and exported from the selected regoins.
 
-6. Select **“Save”**. If your skill supports multiple languages, then you will need to complete Privacy and Compliance for each language before submission.
+ 6. Select **“Save”**. If your skill supports multiple languages, then you will need to complete Privacy and Compliance for each language before submission.
     ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/privacy.png)
 
-7. Select “Submit for Certification”
+ 7. Select “Submit for Certification”
     ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/check_privacy.PNG)
 
-8. Finally, confirm your submission. Select “Yes” to submit your skill.
+ 8. Finally, confirm your submission. Select “Yes” to submit your skill.
 
 
 
