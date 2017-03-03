@@ -243,8 +243,9 @@ AWS Lambda lets you run code without provisioning or managing servers. You pay o
 
    Everything else can stay as-is for now in the Developer Portal
 
- 2. Open the source file for your Lambda function, index.js, in an editor of your choice. This is in the src directory of the repository you downloaded earlier. Look for corresponding locale strings in languageStrings object. "Ctrl-F" **en-US** for English(U.S.), **en-GB** for English(U.K.) and **de-DE** for German. You will see all strings defined for current language in the Reindeer Trivia example. **Note**: **'%s'** in the string represents code logic variable.
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/index.PNG)
+ 2. Open the source file for your Lambda function, index.js, in an editor of your choice. This is in the src directory of the repository you downloaded earlier. Look for corresponding locale strings in languageStrings object. "Ctrl-F" **en** for English and **de** for German. If there are different expressions between U.S. and U.K, we encourage you to specify them using **en-US** and **en-GB** while keeping a generic **en** for other countries. You can learn more about how language resources are looked up by visiting [i18next's documentation](http://i18next.com/translate/). You will see all strings defined for current language in the Reindeer Trivia example. **Note**: **'%s'** in the string represents code logic variable.
+![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/source_code1.png)
+![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/source_code2.png)
 
  3. Change the GAME_NAME variable to the name of your skill.
 
@@ -298,7 +299,7 @@ For more on developing skills in multiple languges, go [here](https://developer.
 ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_intent.PNG)
 
 3. Open the source file for your Lambda function, index.js. In the languageString variable, look up the locale for your current language, edit the language strings, and other message like you did for your initial language. Also remember to edit questions in questions.js. Questions and answers are supposed to be defined using your second language.
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_strings.PNG)
+![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/source_code2.png)
 ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_questions.PNG)
 
 4. For better latency, deploying your code to different endpoints is recommended. Follow the Create Lambda Function instructions in Step 2 and be sure to select an appropriate Lambda region. Select **US East (N. Virginia)** for US skills and **EU (Ireland)** for UK/DE skills. Copy the ARN for use in the Configuration section of the Amazon Developer Portal.
