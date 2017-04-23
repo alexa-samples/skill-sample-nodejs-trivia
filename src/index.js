@@ -197,11 +197,11 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
         this.emitWithState("StartGame", false);
     },
     "AMAZON.RepeatIntent": function () {
-        var newGame = (this.attributes["speechOutput"] && this.attributes["repromptText"]) ? false : true;
+        var newGame = (!(this.attributes["speechOutput"] && this.attributes["repromptText"]));
         this.emitWithState("helpTheUser", newGame);
     },
     "AMAZON.HelpIntent": function() {
-        var newGame = (this.attributes["speechOutput"] && this.attributes["repromptText"]) ? false : true;
+        var newGame = (!(this.attributes["speechOutput"] && this.attributes["repromptText"]));
         this.emitWithState("helpTheUser", newGame);
     },
     "AMAZON.YesIntent": function() {
@@ -244,7 +244,7 @@ function handleUserGuess(userGaveUp) {
     var correctAnswerText = this.attributes.correctAnswerText;
     var translatedQuestions = this.t("QUESTIONS");
 
-    if (answerSlotValid && parseInt(this.event.request.intent.slots.Answer.value) == this.attributes["correctAnswerIndex"]) {
+    if (answerSlotValid && parseInt(this.event.request.intent.slots.Answer.value) === this.attributes["correctAnswerIndex"]) {
         currentScore++;
         speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
     } else {
@@ -256,7 +256,7 @@ function handleUserGuess(userGaveUp) {
     }
 
     // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
-    if (this.attributes["currentQuestionIndex"] == GAME_LENGTH - 1) {
+    if (this.attributes["currentQuestionIndex"] === GAME_LENGTH - 1) {
         speechOutput = userGaveUp ? "" : this.t("ANSWER_IS_MESSAGE");
         speechOutput += speechOutputAnalysis + this.t("GAME_OVER_MESSAGE", currentScore.toString(), GAME_LENGTH.toString());
 
