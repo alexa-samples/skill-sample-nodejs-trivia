@@ -110,7 +110,9 @@ var newSessionHandlers = {
     },
     "Unhandled": function () {
         var speechOutput = this.t("START_UNHANDLED");
-        this.emit(":ask", speechOutput, speechOutput);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     }
 };
 
@@ -146,7 +148,10 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
 
         // Set the current state to trivia mode. The skill will now use handlers defined in triviaStateHandlers
         this.handler.state = GAME_STATES.TRIVIA;
-        this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
+
+        this.response.speak(speechOutput).listen(repromptText);
+        this.response.cardRenderer(this.t("GAME_NAME"), repromptText);
+        this.emit(':responseReady');
     }
 });
 
@@ -162,7 +167,8 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
         this.emitWithState("StartGame", false);
     },
     "AMAZON.RepeatIntent": function () {
-        this.emit(":ask", this.attributes["speechOutput"], this.attributes["repromptText"]);
+        this.response.speak(this.attributes["speechOutput"]).listen(this.attributes["repromptText"]);
+        this.emit(':responseReady');
     },
     "AMAZON.HelpIntent": function () {
         this.handler.state = GAME_STATES.HELP;
@@ -171,14 +177,19 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
     "AMAZON.StopIntent": function () {
         this.handler.state = GAME_STATES.HELP;
         var speechOutput = this.t("STOP_MESSAGE");
-        this.emit(":ask", speechOutput, speechOutput);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     },
     "AMAZON.CancelIntent": function () {
-        this.emit(":tell", this.t("CANCEL_MESSAGE"));
+        this.response.speak(this.t("CANCEL_MESSAGE"));
+        this.emit(':responseReady');
     },
     "Unhandled": function () {
         var speechOutput = this.t("TRIVIA_UNHANDLED", ANSWER_COUNT.toString());
-        this.emit(":ask", speechOutput, speechOutput);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     },
     "SessionEndedRequest": function () {
         console.log("Session ended in trivia state: " + this.event.request.reason);
@@ -190,7 +201,9 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
         var askMessage = newGame ? this.t("ASK_MESSAGE_START") : this.t("REPEAT_QUESTION_MESSAGE") + this.t("STOP_MESSAGE");
         var speechOutput = this.t("HELP_MESSAGE", GAME_LENGTH) + askMessage;
         var repromptText = this.t("HELP_REPROMPT") + askMessage;
-        this.emit(":ask", speechOutput, repromptText);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     },
     "AMAZON.StartOverIntent": function () {
         this.handler.state = GAME_STATES.START;
@@ -215,18 +228,24 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
     },
     "AMAZON.NoIntent": function() {
         var speechOutput = this.t("NO_MESSAGE");
-        this.emit(":tell", speechOutput);
+        this.response.speak(speechOutput);
+        this.emit(':responseReady');
     },
     "AMAZON.StopIntent": function () {
         var speechOutput = this.t("STOP_MESSAGE");
-        this.emit(":ask", speechOutput, speechOutput);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     },
     "AMAZON.CancelIntent": function () {
-        this.emit(":tell", this.t("CANCEL_MESSAGE"));
+        this.response.speak(this.t("CANCEL_MESSAGE"));
+        this.emit(':responseReady');
     },
     "Unhandled": function () {
         var speechOutput = this.t("HELP_UNHANDLED");
-        this.emit(":ask", speechOutput, speechOutput);
+
+        this.response.speak(speechOutput).listen(speechOutput);
+        this.emit(':responseReady');
     },
     "SessionEndedRequest": function () {
         console.log("Session ended in help state: " + this.event.request.reason);
@@ -260,7 +279,8 @@ function handleUserGuess(userGaveUp) {
         speechOutput = userGaveUp ? "" : this.t("ANSWER_IS_MESSAGE");
         speechOutput += speechOutputAnalysis + this.t("GAME_OVER_MESSAGE", currentScore.toString(), GAME_LENGTH.toString());
 
-        this.emit(":tell", speechOutput)
+        this.response.speak(speechOutput);
+        this.emit(':responseReady');
     } else {
         currentQuestionIndex += 1;
         correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -286,7 +306,9 @@ function handleUserGuess(userGaveUp) {
             "correctAnswerText": translatedQuestions[gameQuestions[currentQuestionIndex]][Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0]][0]
         });
 
-        this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
+        this.response.speak(speechOutput).listen(repromptText);
+        this.response.cardRenderer(this.t("GAME_NAME", repromptText));
+        this.emit(':responseReady');
     }
 }
 
