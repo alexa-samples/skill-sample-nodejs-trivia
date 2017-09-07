@@ -181,7 +181,7 @@ AWS Lambda lets you run code without provisioning or managing servers. You pay o
 
  ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/aws_role.png)
 
- 10. You will be asked to set up your Identity and Access Management or “IAM” role if you have not done so. AWS Identity and Access Management (IAM) enables you to securely control access to AWS services and resources for your users. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. We need to create a role that allows our skill to invoke this Lambda function. In the Role Summary section, select "Create a new IAM Role" from the IAM Role dropdown menu. The Role Name and policy document will automatically populate.
+ 10. You will be asked to set up your Identity and Access Management or “IAM” role if you have not done so. AWS Identity and Access Management (IAM) enables you to securely control access to AWS services and resources for your users. Using IAM, you can create and manage AWS users and groups, and use permissions to allow and deny their access to AWS resources. We need to create a role that allows this Lambda function to put log events to CloudWatch Logs. In the Role Summary section, select "Create a new IAM Role" from the IAM Role dropdown menu. The Role Name and policy document will automatically populate.
 
  ![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/hide-details.jpg)
 
