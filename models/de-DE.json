@@ -1,0 +1,65 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "spiel",
+      "intents": [
+        {
+          "name": "AnswerIntent",
+          "slots": [
+            {
+              "name": "Answer",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "die Antwort ist {Answer}",
+            "meine Antwort ist {Answer}",
+            "ist die Antwort {Answer}",
+            "{Answer} ist meine Antwort",
+            "{Answer}"
+          ]
+        },
+        {
+          "name": "DontKnowIntent",
+          "samples": [
+            "weiß ich nicht",
+            "weiß nicht",
+            "überspringen",
+            "das weiß ich nicht",
+            "wer weiß",
+            "diese Frage weiß ich nicht",
+            "die weiß ich nicht",
+            "keine Ahnung"
+          ]
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "Spiel starten",
+            "neues Spiel",
+            "starten",
+            "neues Spiel starten"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ]
+    }
+  }
+}
