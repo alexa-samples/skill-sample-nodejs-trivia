@@ -1,0 +1,65 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "game",
+      "intents": [
+        {
+          "name": "AnswerIntent",
+          "slots": [
+            {
+              "name": "Answer",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "the answer is {Answer}",
+            "my answer is {Answer}",
+            "is it {Answer}",
+            "{Answer} is my answer",
+            "{Answer}"
+          ]
+        },
+        {
+          "name": "DontKnowIntent",
+          "samples": [
+            "i don't know",
+            "don't know",
+            "skip",
+            "i don't know that",
+            "who knows",
+            "i don't know this question",
+            "i don't know that one",
+            "dunno"
+          ]
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "start game",
+            "new game",
+            "start",
+            "start new game"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        },
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        }
+      ]
+    }
+  }
+}
