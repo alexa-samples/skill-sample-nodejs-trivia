@@ -55,7 +55,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
 8.  Click on the "Code Editor" item under **Dashboard** on the top left side of the skill builder.
 
-9.  In the textfield provided, replace any existing code with the code provided in the [Interaction Model](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/InteractionModel.json), then click "Apply Changes" or "Save Model".
+9.  In the textfield provided, replace any existing code with the code provided in the [Interaction Model](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/interaction-model.json), then click "Apply Changes" or "Save Model".
 
 8.  Click on the "Add+" button near **Intents** on the top left corner of the dashboard.
 
