@@ -1,38 +1,39 @@
-# Build An Alexa Trivia Skill
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-locked._TTH_.png)](./1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-locked._TTH_.png)](./2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-locked._TTH_.png)](./3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-locked._TTH_.png)](./4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-on._TTH_.png)](./5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./6-publication.md)
+# Alexa トリビアスキルの開発
+[![音声ユーザーインターフェース](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-locked.png)](1-voice-user-interface.md)
+[![Lambda 関数](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-locked.png)](2-lambda-function.md)
+[![VUIとコードを接続する](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-locked.png)](3-connect-vui-to-code.md)
+[![テスト](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-locked.png)](4-testing.md)
+[![カスタマイズ](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-on.png)](5-customization.md)
+[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-off.png)](6-publication.md)
 
-## Add Additional Languages (Optional)
+## 他の言語を追加する（オプション）
 
-You can use the Alexa Skills Kit to create skills in multiple languages. A skill can support a single language, or any combination of the available languages:
-* English (US)
-* English (UK)
-* German
+Alexa Skills Kit で多言語対応のスキルを作ることができます。スキルがサポートする言語は1つだけでも良いし、利用可能な言語から複数選択することもできます。多言語スキルの開発について詳細は[こちら](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/developing-skills-in-multiple-languages)を参照してください。
 
-For more on developing skills in multiple languges, go [here](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/developing-skills-in-multiple-languages).
 
-1. To add an additional language, simply select the Add New Language tab in Developer Portal and choose your second language. Choose and fill all necessary information like we did for the initial language of your skill. You will need to define Name and Invocation Name for the current language (e.g. German name for German skills). Then click Save to continue.
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_info.PNG)
+1. 「新しい言語を追加」タブをクリックし、言語を選択するだけで言語を追加できます。１つ目の言語と同じ要領で必要な項目を埋めてください。スキル名と呼び出し名は設定中の言語にする必要があります(例えば英語の場合は英語の名前をつけます)。**「保存」** ボタンをクリックして続けてください。
 
-2. In the Interaction Model section, our skill shares the same intent schema and uses different sample utterances and custom slot type values in different languages. Copy the corresponding .json model from the [GitHub repository here](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/models) into the "code" section in the Skill Builder to change sample utterances into your second language. We will not be using custom slots in this template, but slot type values should be put in the new language if your skill has them. For Reindeer Trivia in German, go [GitHub repository here](https://github.com/alexa/skill-sample-nodejs-trivia/tree/master/models/de-DE.json) for a sample model.
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_intent.PNG)
+	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/trivia/5-1-English-info.png)
 
-3. Open the source file for your Lambda function, index.js. In the languageString variable, look up the locale for your current language, edit the language strings, and other message like you did for your initial language. Also remember to edit questions in questions.js. Questions and answers are supposed to be defined using your second language.
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/source_code2.png)
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_questions.PNG)
+2. 対話モデルのセクションでは、今回のスキルは Intent Schema は同じですが、サンプル発話とカスタムスロットタイプの値は言語毎に異なります。スキルビルダーの **Code Editor** を開き、追加した言語の Intent Schemaと、サンプル発話を編集します。この[GitHubのmodelsフォルダ](../models)から対応する言語の Intent Schema を選択し、ドラッグ＆ドロップしてコピーすることもできます。今回のテンプレートではカスタムスロットタイプは使っていませんが、使っているスキルの場合はカスタムスロットタイプの値は選択した言語にする必要があります。
 
-4. For better latency, deploying your code to different endpoints is recommended. Follow the Create Lambda Function instructions in Step 2 and be sure to select an appropriate Lambda region. Select **US East (N. Virginia)** for US skills and **EU (Ireland)** for UK/DE skills. Copy the ARN for use in the Configuration section of the Amazon Developer Portal.
+	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/trivia/5-2-English-sample-atterances-dd.png)
 
-5. Go back to skill Configuration section, which contains Global fields for all languages. Add an extra endpoint and paste your Lambda ARN. Save your skill configuration information.
 
-![](https://s3.amazonaws.com/lantern-code-samples-images/trivia/german_lambda.PNG)
+3. Lambda関数のソースファイル index.js を開いてください。**languageString** の値の中から設定中の言語のロケールを探し、文字列を編集してください。questions.js 内の質問も忘れずに編集してください。質問と答えは選択中の言語で記載することになっています。
 
-6. Test your skill in the second language using Service Simulator or a device.
+	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/trivia/5-3-English-source-code2.png)
+	
+	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/trivia/5-3-English-questions.png)
+	
+4. レイテンシを小さくするため、コードは異なるエンドポイントにデプロイすることをお勧めします。[ステップ2](2-lambda-function.md)の Lambda 関数作成の手順に沿って適切な Lambda のリージョンを選択するようにしてください。アメリカ向けスキルの場合は **米国東部 (バージニア北部)** または **米国西部 (オレゴン)**、イギリスとドイツ向けスキルの場合は **EU (アイルランド)** 、日本向けスキルの場合は **アジアパシフィック (東京)** を選択してください。開発者ポータルの設定のセクションで利用するため、ARNをコピーしてください。
 
-4.  **Once you have made the updates listed on this page, you can click "Next" to move on to Publishing and Certification of your skill.**
+5. スキルの設定セクションに戻ってください。エンドポイントの地理的リージョンを追加し、先ほどコピーした ARN を貼り付け、設定を保存してください。
 
-    <a href="./"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/3-7-next-button._TTH_.png" /></a>
+	![](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/trivia/5-5-English-lambda.png)
 
-<br/><br/>
-<a href="./6-publication.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_publication._TTH_.png" /></a>
+6. サービスシミュレーターもしくは実機で追加した言語のテストを実施してください。
 
-<img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
+7.  このページに記載した全てのアップデートが終わったら、下のボタンをクリックして、**スキルの公開**に進んでください
+
+[![スキルの公開](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_next_publication.png)](6-publication.md)
