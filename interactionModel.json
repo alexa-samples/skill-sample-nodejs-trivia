@@ -15,10 +15,10 @@
     {
       "name": "AnswerIntent",
       "samples": [
-        "the answer is {Answer}",
-        "my answer is {Answer}",
-        "is it {Answer}",
-        "{Answer} is my answer",
+        "{Answer} です",
+        "答えは {Answer}",
+        "{Answer} かな",
+        "{Answer} だと思う",
         "{Answer}"
       ],
       "slots": [
@@ -32,14 +32,14 @@
     {
       "name": "DontKnowIntent",
       "samples": [
-        "i don't know",
-        "don't know",
-        "i don't know that one",
-        "dunno",
-        "skip",
-        "i don't know that",
-        "who knows",
-        "i don't know this question"
+        "わかりません",
+        "わからない",
+        "知らない",
+        "わかんない",
+        "スキップ",
+        "知りません",
+        "知らん",
+        "意味わかんない"
       ],
       "slots": []
     }

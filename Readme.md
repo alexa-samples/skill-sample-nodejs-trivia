@@ -1,24 +1,35 @@
-# Build An Alexa Trivia Skill
+Regions: [🇺🇸](../../tree/en-US)
+
+# Alexa トリビアスキルの開発 🇯🇵
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/1-off._TTH_.png)](./instructions/1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/2-off._TTH_.png)](./instructions/2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/3-off._TTH_.png)](./instructions/3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/4-off._TTH_.png)](./instructions/4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/5-off._TTH_.png)](./instructions/5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/navigation/6-off._TTH_.png)](./instructions/6-publication.md)
+[![Voice User Interface](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/1-off.png)](instructions/1-voice-user-interface.md)[![Lambda Function](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/2-off._TTH_.png)](instructions/2-lambda-function.md)[![Connect VUI to Code](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/3-off._TTH_.png)](instructions/3-connect-vui-to-code.md)[![Testing](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/4-off._TTH_.png)](instructions/4-testing.md)[![Customization](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/5-off._TTH_.png)](instructions/5-customization.md)[![Publication](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/navigation/6-off._TTH_.png)](instructions/6-publication.md)
 
-The template leverages [AWS Lambda](https://aws.amazon.com/lambda/), the [Alexa Skills Kit (ASK)](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit), and the [ASK SDK](https://developer.amazon.com/public/community/post/Tx213D2XQIYH864/Announcing-the-Alexa-Skills-Kit-for-Node-js), while providing the business logic, multiple language support, use cases, error handling and help functions for your skill. You just need to come up with a content idea (like "Santa Claus Trivia"), plug in your content and edit the sample provided (we walk you through how it’s done). It's a valuable way to quickly learn the end-to-end process for building and publishing an Alexa skill.
+このテンプレートは、[AWS Lambda](https://aws.amazon.com/lambda/)、[Alexa Skills Kit (ASK)](https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit)、[ASK SDK](https://developer.amazon.com/public/community/post/Tx213D2XQIYH864/Announcing-the-Alexa-Skills-Kit-for-Node-js)を活用し、ビジネスロジック、多言語サポート、ユースケース、エラーハンドリング、ヘルプ機能などの実装例を提供します。
+コンテンツのアイデア(例えばサンタクローストリビア)を考えて、そのコンテンツをこのサンプルに埋め込むだけで新しいスキルを作ることができます。Alexa スキルの開発から公開までのステップを一通り学習するのにとても適しています。
 
-This tutorial will walk first-time Alexa skills developers through all the required steps involved in creating a skill using this trivia skill template, called ‘Reindeer Trivia’. This post assumes you have some familiarity with JavaScript/Node.js (or a similar programming language) and the Alexa Skills Kit.
+このチュートリアルでは、始めて Alexa スキルを作成する開発者を対象に、「トナカイトリビア」と呼ばれるトリビアスキルのテンプレートを使って、スキル開発に必要な全てのステップを説明します。JavaSciript / Node.js (もしくは類似のプログラミング言語)と Alexa Skills Kit をある程度知っていることを前提としています。
 
-Using the Alexa Skills Kit, you can build an application that can receive and respond to voice requests made on the Alexa platform.  In this tutorial, you’ll build a web service to handle notifications from Alexa and map this service to a skill in the Amazon Developer Portal, making it available on your device and to all Alexa users after certification.
+Alexa Skills Kit を利用することで、音声リクエストを受け取り、音声によるレスポンスを返すアプリケーションを Alexa サービス上に構築することができます。このチュートリアルを辿ることで、Alexa からのリクエストを処理するウェブサービスを作成し、そのサービスを Amazon 開発者ポータルに登録して、あなたのデバイスや、認定を取得すればすべてのユーザーのデバイスで利用できるようになります。
 
- After completing this tutorial, you will know how to:
+ このチュートリアルを修了すると、以下のことができるようになります。
 
-   * **Create a parameter-based skill** - This tutorial will walk first-time Alexa skills developers through all the required steps involved in creating a parameter-based skill using a template called ‘Reindeer Trivia’.
-   * **Understand the basics of VUI design** - Creating this skill will help you understand the basics of creating a working Voice User Interface (VUI) while using a cut/paste approach to development. You will learn by doing, and end up with a published Alexa skill. This tutorial includes instructions on how to customize the skill and submit it for certification. For guidance on designing a voice experience with Alexa you can also [watch this video](https://goto.webcasts.com/starthere.jsp?ei=1087592).
-   * **Use JavaScript/Node.js and the Alexa Skills Kit to create a skill** - You will use the template as a guide but the customization is up to you. For more background information on using the Alexa Skills Kit please [watch this video](https://goto.webcasts.com/starthere.jsp?ei=1087595).
-   * **Get your skill published** - Once you have completed your skill, this tutorial will guide you through testing your skill and sending your skill through the certification process, making it available to be enabled by any Alexa user.
+   * **パラメータに基づくスキルを作成する** 
 
-# Let's Get Started
+   このチュートリアルでは、始めて Alexa スキルを作成する開発者を対象に、「トナカイトリビア」と呼ばれるトリビアスキルのテンプレートを使って、パラメータに基づくスキル開発に必要なステップの全てを説明します。
+   
+   * **基本的な VUI 設計を理解する**
 
-<a href="./instructions/1-voice-user-interface.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_get_started._TTH_.png" /></a>
+   開発するにあたって、テンプレートからコピー＆ペーストをしながらスキルを作成することで、音声ユーザーインターフェース (VUI) の基本を学ぶことができます。最終的にはスキルを公開することも可能です。このチュートリアルでは、スキルのカスタマイズ方法や、公開申請の方法についても説明しています。Alexa Skills Kit を使った音声エクスペリエンスの設計については[こちらのビデオ](https://goto.webcasts.com/starthere.jsp?ei=1087592)も参考になるでしょう。
+   
+   * **JavaScript/Node.js と Alexa Skills Kit を使ってスキルを開発する**
 
+   スキル開発のガイドとしてテンプレートを使用しますが、あなた次第でカスタマイズすることができます。Alexa Skills Kit のより基本的な情報については [こちらのビデオ](https://goto.webcasts.com/starthere.jsp?ei=1087595)を参照してください。
+   
+   * **スキルを公開する** 
 
-<img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
+   スキルの開発が完了したら、このチュートリアルのガイドに従ってスキルをテストし、公開申請を行い、すべての Alexa ユーザが利用できるようにしましょう。
+
+**それでは、始めましょう**
+	
+[![始めましょう](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/jp/tutorials/general/buttons/button_get_started.png)](instructions/1-voice-user-interface.md)
