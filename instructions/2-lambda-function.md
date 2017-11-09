@@ -26,16 +26,16 @@ In the [first step of this guide](../instructions/1-voice-user-interface.md), we
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-4-create-a-lambda-function._TTH_.png" />
 
 5. **Skip the blueprint and zip your files.**
-      * Under "Select blueprint", choose skip.
+  * Under "Select blueprint", choose skip.
 
-      * On your local machine, go to the ```skill-sample-nodejs-trivia/lambda/``` directory and run ```deploy.js``` using Node.
+  * On your local machine, go to the ```skill-sample-nodejs-trivia/lambda/``` directory and run ```deploy.js``` using Node.
 
-      ```
-        npm install aws-sdk
-        node deploy.js
-        ```
+  ```
+    npm install aws-sdk
+    node deploy.js
+  ```
 
-      * Go to the the ```skill-sample-nodejs-trivia/lambda/custom/``` directory and zip all of the files.  Be sure to only zip the files inside the directory, and not the directory itself.   Lambda needs to be able to find the ```index.js``` file at the root of the zip file.
+  * Go to the the ```skill-sample-nodejs-trivia/lambda/custom/``` directory and zip all of the files.  Be sure to only zip the files inside the directory, and not the directory itself.   Lambda needs to be able to find the ```index.js``` file at the root of the zip file.
 
 6.  **Configure your function.** This screen is where we will enter the important parts of our Lambda function.  These values will only ever be visible to you, but make sure that you name your function something meaningful.  "TriviaSkill" is sufficient if you don't have another idea for a name.
 
