@@ -35,6 +35,7 @@ In the [first step of this guide](../instructions/1-voice-user-interface.md), we
         node deploy.js
         ```
 
+
       * Go to the the ```skill-sample-nodejs-trivia/lambda/custom/``` directory and zip all of the files.  Be sure to only zip the files inside the directory, and not the directory itself.   Lambda needs to be able to find the ```index.js``` file at the root of the zip file.
 
 6.  **Configure your function.** This screen is where we will enter the important parts of our Lambda function.  These values will only ever be visible to you, but make sure that you name your function something meaningful.  "TriviaSkill" is sufficient if you don't have another idea for a name.
