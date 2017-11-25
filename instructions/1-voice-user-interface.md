@@ -63,7 +63,7 @@ There are two parts to an Alexa skill.  The first part is the [Voice User Interf
 
     ![Add Intent Button](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-8-intents-button._TTH_.png)
 
-9.  In the textbox provided, enter the new intent name: **GetAnswerIntent.**, and click the **Create Intent** button.
+9.  In the textbox provided, enter the new intent name: **AnswerIntent.**, and click the **Create Intent** button.
 
     ![Add Intent](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/1-9-add-custom-intent._TTH_.png)
 

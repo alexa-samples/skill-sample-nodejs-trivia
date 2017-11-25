@@ -241,7 +241,7 @@ function handleUserGuess(userGaveUp) {
         });
 
         this.response.speak(speechOutput).listen(repromptText);
-        this.response.cardRenderer(this.t('GAME_NAME', repromptText));
+        this.response.cardRenderer(this.t('GAME_NAME'), repromptText);
         this.emit(':responseReady');
     }
 }

@@ -9,7 +9,28 @@
       "samples": []
     },
     {
+      "name": "AMAZON.NoIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.RepeatIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StartOverIntent",
+      "samples": [
+        "start game",
+        "new game",
+        "start",
+        "start new game"
+      ]
+    },
+    {
       "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.YesIntent",
       "samples": []
     },
     {
