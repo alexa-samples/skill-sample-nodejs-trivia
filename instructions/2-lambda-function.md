@@ -51,11 +51,11 @@ In the [first step of this guide](../instructions/1-voice-user-interface.md), we
 
       Once you have selected Alexa Skills Kit, scroll down and click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function (TriviaSkill if you used our suggestion) then scroll down to the next section of the page titled "Function code".
 
-9.  **Select "Upload a .ZIP file" as your Code Entry Type** Then click "Upload" and select the zip file you created with the command above.
+9.  **Select "Upload a .ZIP file" as your Code Entry Type** Then click "Upload" and select the zip file you created with the command above. Then click the "Save" button in the top right.
 
-11.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](../src/index.js).  Delete the contents of the code box, and paste the contents of the new code.
+<!-- 11.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](../src/index.js).  Delete the contents of the code box, and paste the contents of the new code. -->
 
-12. **The ARN value should be in the top right corner. Copy this value for use in the next section of the guide.**
+10. **The ARN value should be in the top right corner. Copy this value for use in the next section of the guide.**
 
   <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-12-copy-ARN._TTH_.png" />  <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE. -->
 
