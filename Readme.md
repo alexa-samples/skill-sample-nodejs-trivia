@@ -62,10 +62,10 @@ Alexa, start reindeer trivia
 	$ ask init
 	```
 
-3. Install npm dependencies by navigating into the `/lambda` directory and running the npm command: `npm install`
+3. Install npm dependencies by navigating into the `/lambda/custom` directory and running the npm command: `npm install`
 
 	```bash
-	$ cd lambda
+	$ cd lambda/custom
 	$ npm install
 	```
 
