@@ -1,4 +1,4 @@
-/* eslint-disable  func-names */
+ /* eslint-disable  func-names */
 /* eslint-disable  dot-notation */
 /* eslint-disable  new-cap */
 /* eslint quote-props: ['error', 'consistent']*/
