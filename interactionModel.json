@@ -1,47 +1,65 @@
 {
-  "intents": [
-    {
-      "name": "AMAZON.CancelIntent",
-      "samples": []
-    },
-    {
-      "name": "AMAZON.HelpIntent",
-      "samples": []
-    },
-    {
-      "name": "AMAZON.StopIntent",
-      "samples": []
-    },
-    {
-      "name": "AnswerIntent",
-      "samples": [
-        "the answer is {Answer}",
-        "my answer is {Answer}",
-        "is it {Answer}",
-        "{Answer} is my answer",
-        "{Answer}"
-      ],
-      "slots": [
-        {
-          "name": "Answer",
-          "type": "AMAZON.NUMBER",
-          "samples": []
-        }
-      ]
-    },
-    {
-      "name": "DontKnowIntent",
-      "samples": [
-        "i don't know",
-        "don't know",
-        "i don't know that one",
-        "dunno",
-        "skip",
-        "i don't know that",
-        "who knows",
-        "i don't know this question"
-      ],
-      "slots": []
-    }
-  ]
+  "languageModel": {
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.NoIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.RepeatIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StartOverIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.YesIntent",
+        "samples": []
+      },
+      {
+        "name": "AnswerIntent",
+        "samples": [
+          "the answer is {Answer}",
+          "my answer is {Answer}",
+          "is it {Answer}",
+          "{Answer} is my answer",
+          "{Answer}"
+        ],
+        "slots": [
+          {
+            "name": "Answer",
+            "type": "AMAZON.NUMBER"
+          }
+        ]
+      },
+      {
+        "name": "DontKnowIntent",
+        "samples": [
+          "i don't know",
+          "don't know",
+          "i don't know that one",
+          "dunno",
+          "skip",
+          "i don't know that",
+          "who knows",
+          "i don't know this question"
+        ],
+        "slots": []
+      }
+    ],
+    "invocationName": "reindeer trivia"
+  }
 }
