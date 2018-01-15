@@ -45,21 +45,35 @@ In the [first step of this guide](../instructions/1-voice-user-interface.md), we
 
   <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-9-lambda-function-role._TTH_.png" />
 
-8. **Configure your trigger.** Look at the column on the left called "Add triggers", and select Alexa Skills Kit from the list.  If you don't see Alexa Skills Kit in the list, jump back to step #3 on this page.
+8. **Click Create Function in the bottom right corner.**  You will need to scroll down to find **Create Function.**
 
-      <!-- <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-6-configure-your-trigger._TTH_.png" /> TODO: THIS SCREENSHOT IS OUT OF DATE-->
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-11-create-function-button._TTH_.png" />
 
-      Once you have selected Alexa Skills Kit, scroll down and click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function (TriviaSkill if you used our suggestion) then scroll down to the next section of the page titled "Function code".
+9. **Configure your trigger.** Look at the column on the left called "Add triggers", and select Alexa Skills Kit from the list.  If you don't see Alexa Skills Kit in the list, jump back to step #3 on this page.
 
-9.  **Select "Upload a .ZIP file" as your Code Entry Type** Then click "Upload" and select the zip file you created with the command above. Then click the "Save" button in the top right.
+    <!-- <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-6-configure-your-trigger._TTH_.png" /> TODO: THIS SCREENSHOT IS OUT OF DATE-->
+
+10. Once you have selected Alexa Skills Kit, scroll down. Under Configure triggers, select Enable for Skill ID verification. A skill ID Edit box should appear. We will now retrieve your Skill ID from the developer portal.
+
+11. Now lets secure this lambda function, so that it can only be invoked by your skill. Open up the [developer portal](https://developer.amazon.com/edw/home.html#/skills) and select your skill from the list. You mays till have a browser tab open if you started at the beginning of this tutorial.
+
+12. Click the Skill Information Link.
+
+    <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/3-2-configuration-tab._TTH_.png" />
+
+13. Copy the **Application ID** provided in the main window. This is also known as a skill ID, and is unique to your skill.
+
+14. Return back to your lambda function in the. You may already have this browser tab open from **Step 11**. Otherwise, open the lambda console here [AWS Console](https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions) and selecting the appropriate function. Scroll down to **Configure triggers**, paste the Skill ID in the Skill ID edit box.
+
+15. Click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function and scroll down to the field called "Function code".
+
+16.  **Select "Upload a .ZIP file" as your Code Entry Type** Then click "Upload" and select the zip file you created with the command above. Then click the "Save" button in the top right.
 
 <!-- 11.  **Copy and paste the [provided code](https://github.com/alexa/skill-sample-nodejs-trivia/blob/master/lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](../src/index.js).  Delete the contents of the code box, and paste the contents of the new code. -->
 
-10. **The ARN value should be in the top right corner. Copy this value for use in the next section of the guide.**
+17. **The ARN value should be in the top right corner. Copy this value for use in the next section of the guide.**
 
   <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/2-12-copy-ARN._TTH_.png" />  <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE. -->
 
 <br/><br/>
 <a href="../instructions/3-connect-vui-to-code.md"><img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_connect_vui_to_code._TTH_.png"/></a>
-
-<img height="1" width="1" src="https://www.facebook.com/tr?id=1847448698846169&ev=PageView&noscript=1"/>
