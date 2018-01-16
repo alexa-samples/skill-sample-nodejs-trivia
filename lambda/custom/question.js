@@ -2,7 +2,7 @@
 
 module.exports = {
     /**
-     * When editing your questions pay attention to your punctuation. Make sure you use question marks or periods.
+     * When editing your questions pay attention to your punctuation. Make sure you use question marks.
      * Make sure the first answer is the correct one. Set at least ANSWER_COUNT answers, any extras will be shuffled in.
      */
     QUESTIONS_EN_GB: [
@@ -17,7 +17,7 @@ module.exports = {
             ],
         },
         {
-            'The 1964 classic Rudolph The Red Nosed Reindeer was filmed in. ': [
+            'The 1964 classic Rudolph The Red Nosed Reindeer was filmed in? ': [
                 'Japan',
                 'United States',
                 'Finland',
@@ -36,7 +36,7 @@ module.exports = {
             ],
         },
         {
-            'If all of Santas reindeer had antlers while pulling his Christmas sleigh, they would all be. ': [
+            'If all of Santas reindeer had antlers while pulling his Christmas sleigh, they would all be? ': [
                 'Girls',
                 'Boys',
                 'Girls and boys',
@@ -96,7 +96,7 @@ module.exports = {
                 'Robert May',
                 'Johnny Marks',
                 'Santa',
-                'J.K. Rowling',
+                'J K  Rowling',
             ],
         },
         {
@@ -124,7 +124,7 @@ module.exports = {
             ],
         },
         {
-            'Santa only has one female reindeer. Which one is it?': [
+            'Santa only has one female reindeer, Which one is it?': [
                 'Vixen',
                 'Clarice',
                 'Cupid',
@@ -266,7 +266,7 @@ module.exports = {
             ],
         },
         {
-            'The 1964 classic Rudolph The Red Nosed Reindeer was filmed in. ': [
+            'The 1964 classic Rudolph The Red Nosed Reindeer was filmed in? ': [
                 'Japan',
                 'United States',
                 'Finland',
@@ -345,7 +345,7 @@ module.exports = {
                 'Robert May',
                 'Johnny Marks',
                 'Santa',
-                'J.K. Rowling',
+                'J K  Rowling',
             ],
         },
         {
@@ -373,7 +373,7 @@ module.exports = {
             ],
         },
         {
-            'Santa only has one female reindeer. Which one is it?': [
+            'Santa only has one female reindeer, Which one is it?': [
                 'Vixen',
                 'Clarice',
                 'Cupid',
@@ -505,7 +505,7 @@ module.exports = {
     ],
     QUESTIONS_DE_DE: [
         {
-            'Rentiere haben ein sehr dickes Fell. Wie viele Haare pro Quadratzentimeter haben sie?': [
+            'Rentiere haben ein sehr dickes Fell, Wie viele Haare pro Quadratzentimeter haben sie?': [
                 '13,000',
                 '1,200',
                 '5,000',
@@ -515,7 +515,7 @@ module.exports = {
             ],
         },
         {
-            'Der Klassiker aus dem Jahr 1964, Rudolph mit der roten Nase, wurde gedreht in. ': [
+            'Der Klassiker aus dem Jahr 1964, Rudolph mit der roten Nase, wurde gedreht in? ': [
                 'Japan',
                 'USA',
                 'Finnland',
@@ -526,7 +526,7 @@ module.exports = {
             ],
         },
         {
-            'Um die Rentiere des Weihnachtsmanns kümmert sich eine der Weihnachtselfen. Wie heißt sie?': [
+            'Um die Rentiere des Weihnachtsmanns kümmert sich eine der Weihnachtselfen, Wie heißt sie?': [
                 'Wunorse Openslae',
                 'Alabaster Snowball',
                 'Bushy Evergreen',
@@ -534,7 +534,7 @@ module.exports = {
             ],
         },
         {
-            'Wenn alle Rentiere des Weihnachtsmanns Geweihe hätten, während sie seinen Weihnachtsschlitten ziehen, wären sie alle. ': [
+            'Wenn alle Rentiere des Weihnachtsmanns Geweihe hätten, während sie seinen Weihnachtsschlitten ziehen, wären sie alle ': [
                 'Weiblich',
                 'Männlich',
                 'Weiblich und männlich',
@@ -594,14 +594,14 @@ module.exports = {
                 'Robert May',
                 'Johnny Marks',
                 'Santa',
-                'J.K. Rowling',
+                'J K  Rowling',
             ],
         },
         {
             'Wo findest du keine Rentiere?': [
                 'Nordpol',
                 'Lappland',
-                'Korvatunturi-Berge',
+                'Korvatunturi Berge',
                 'Finnland',
             ],
         },
@@ -622,7 +622,7 @@ module.exports = {
             ],
         },
         {
-            'Der Weihnachtsmann hat nur ein weibliches Rentier. Wie heißt es?': [
+            'Der Weihnachtsmann hat nur ein weibliches Rentier, Wie heißt es?': [
                 'Blitzen',
                 'Clarice',
                 'Cupid',
@@ -670,7 +670,7 @@ module.exports = {
             ],
         },
         {
-            'Was möchte die Misfit-Elfe im Film aus dem Jahr 1964 werden anstatt eine Elfe für den Weihnachtsmann?': [
+            'Was möchte die Misfit Elfe im Film aus dem Jahr 1964 werden anstatt eine Elfe für den Weihnachtsmann?': [
                 'Zahnarzt',
                 'Rentier',
                 'Spielzeugmacher',
