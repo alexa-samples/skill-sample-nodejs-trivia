@@ -16,7 +16,7 @@ const Alexa = require('alexa-sdk');
 const questions = require('./question');
 
 const ANSWER_COUNT = 4; // The number of possible answers per trivia question.
-const GAME_LENGTH = 10;  // The number of questions per trivia game.
+const GAME_LENGTH = 5;  // The number of questions per trivia game.
 const GAME_STATES = {
     TRIVIA: "_TRIVIAMODE", // Asking trivia questions.
     START: "_STARTMODE", // Entry point, start the game.
