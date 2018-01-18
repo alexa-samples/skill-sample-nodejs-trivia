@@ -14,10 +14,45 @@ module.exports = {
                 'Pinch',
             ]
         },
-
         {
-            
-        }
-
+            'Which science term is defined as reducing size by squeezing': [
+                'Compression',
+                'Squish',
+                'Smush',
+                'Pinch',
+            ]
+        },
+        {
+            'Which science term is defined as reducing size by squeezing': [
+                'Compression',
+                'Squish',
+                'Smush',
+                'Pinch',
+            ]
+        },
+        {
+            'Which science term is defined as reducing size by squeezing': [
+                'Compression',
+                'Squish',
+                'Smush',
+                'Pinch',
+            ]
+        },
+        {
+            'Which science term is defined as reducing size by squeezing': [
+                'Compression',
+                'Squish',
+                'Smush',
+                'Pinch',
+            ]
+        },
+        {
+            'Which science term is defined as reducing size by squeezing': [
+                'Compression',
+                'Squish',
+                'Smush',
+                'Pinch',
+            ]
+        },
     ],
 };
