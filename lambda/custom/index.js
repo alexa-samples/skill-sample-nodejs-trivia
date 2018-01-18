@@ -59,7 +59,7 @@ const languageString = {
     "en-US": {
         "translation": {
             "QUESTIONS": questions["QUESTIONS_EN_US"],
-            "GAME_NAME": "American Reindeer Trivia", // Be sure to change this for your skill.
+            "GAME_NAME": "Dunkin Science Trivia", // Be sure to change this for your skill.
         },
     },
 };
