@@ -13,6 +13,22 @@
       "samples": []
     },
     {
+      "name": "AMAZON.YesIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.NoIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StartOverIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.RepeatIntent",
+      "samples": []
+    },
+    {
       "name": "AnswerIntent",
       "samples": [
         "{Answer} です",
