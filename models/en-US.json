@@ -45,9 +45,26 @@
             "i don't know this question"
           ],
           "slots": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "start game",
+            "new game",
+            "start",
+            "start new game"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
         }
       ]
-
     }
   }
 }

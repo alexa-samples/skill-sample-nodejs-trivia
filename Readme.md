@@ -22,13 +22,13 @@ Be sure to take a look at the [Additional Resources](#additional-resources) at t
 **Note:** The rest of this readme assumes you have your developer environment ready to go and that you have some familiarity with CLI (Command Line Interface) Tools, [AWS](https://aws.amazon.com/), and the [ASK Developer Portal](https://developer.amazon.com/alexa-skills-kit). If not, [click here](./instructions/0-intro.md) for a more detailed walkthrough.
 
 
- 
+
 ### Usage
 
 ```text
 Alexa, tell reindeer trivia to start a game
 	>> Welcome to Reindeer Trivia. I will ask you multiple choice questions...
-	
+
 Alexa, start reindeer trivia
 ```
 
@@ -42,7 +42,7 @@ Alexa, start reindeer trivia
 ## Setup w/ ASK CLI
 
 ### Pre-requisites
-	
+
 * Node.js (> v4.3)
 * Register for an [AWS Account](https://aws.amazon.com/)
 * Register for an [Amazon Developer Account](https://developer.amazon.com/)
@@ -56,16 +56,16 @@ Alexa, start reindeer trivia
 	```
 
 2. Initiatialize the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html) by Navigating into the repository and running npm command: `ask init`. Follow the prompts.
-	
+
 	```bash
 	$ cd skill-sample-nodejs-trivia
 	$ ask init
 	```
 
-3. Install npm dependencies by navigating into the `/lambda` directory and running the npm command: `npm install`
+3. Install npm dependencies by navigating into the `/lambda/custom` directory and running the npm command: `npm install`
 
 	```bash
-	$ cd lambda
+	$ cd lambda/custom
 	$ npm install
 	```
 
@@ -77,7 +77,7 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 1. Deploy the skill and the lambda function in one step by running the following command:
 
 	```bash
-	$ ask deploy 
+	$ ask deploy
 	```
 
 ### Testing
@@ -87,14 +87,14 @@ ASK CLI will create the skill and the lambda function for you. The Lambda functi
 2. Simulate verbal interaction with your skill through the command line using the following example:
 
 	```bash
-	 $ ask simulate -l en-GB -t "alexa, start reindeer trivia"
-	 
+	 $ ask simulate -l en-GB -t "start reindeer trivia"
+
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
 	  "status": "SUCCESSFUL",
 	  ...
 	 ```
-	 
+
 3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Mobile App and say :
 
 	```text
