@@ -25,13 +25,13 @@ This readme assumes you have your developer environment ready to go and that you
 2. **Clone** the repository.
 
 	```bash
-	$ git clone https://github.com/alexa/skill-sample-nodejs-fact/
+	$ git clone https://github.com/alexa/skill-sample-nodejs-trivia/
 	```
 
 3. If it's your first time using it, **initiatialize** the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Content&sc_detail=trivia-nodejs-V2_CLI-1&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Content_trivia-nodejs-V2_CLI-1_Convert_WW_beginnersdevs&sc_segment=beginnersdevs) by navigating into the repository and running npm command: `ask init`. Follow the prompts.
 
 	```bash
-	$ cd skill-sample-nodejs-fact
+	$ cd skill-sample-nodejs-trivia
 	$ ask init
 	```
 
@@ -60,7 +60,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 2. Simulate verbal interaction with your skill through the command line (this might take a few moments) using the following example:
 
 	```bash
-	 $ ask simulate -l en-GB -t "start space facts"
+	 $ ask simulate -l en-GB -t "start reindeer trivia"
 
 	 ✓ Simulation created for simulation id: 4a7a9ed8-94b2-40c0-b3bd-fb63d9887fa7
 	◡ Waiting for simulation response{
@@ -71,7 +71,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 3. Once the "Test" switch is enabled, your skill can be tested on devices associated with the developer account as well. Speak to Alexa from any enabled device, from your browser at [echosim.io](https://echosim.io/welcome), or through your Amazon Mobile App and say :
 
 	```text
-	Alexa, start space facts
+	Alexa, start reindeer trivia
 	```
 ## Customization
 
@@ -85,7 +85,7 @@ ASK CLI **will create the skill and the lambda function for you**. The Lambda fu
 
 2. ```./lambda/custom/index.js```
 
-   Modify messages, and facts from the source code to customize the skill.
+   Modify messages, and trivia from the source code to customize the skill.
 
 3. ```./models/*.json```
 
