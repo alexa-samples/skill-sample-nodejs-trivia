@@ -355,13 +355,13 @@ const UnhandledIntent = {
         .getResponse();
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
-      return handlerInput.attributesManager
+      return handlerInput.responseBuilder
         .speak(speechOutput)
         .reprompt(speechOutput)
         .getResponse();
     }
     const speechOutput = requestAttributes.t('HELP_UNHANDLED');
-    return handlerInput.attributesManager.speak(speechOutput).reprompt(speechOutput).getResponse();
+    return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
   },
 };
 
