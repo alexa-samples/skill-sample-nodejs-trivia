@@ -6,8 +6,6 @@ Regions: [🇯🇵](../../tree/ja-JP)
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/header._TTH_.png" />
 
 
-<img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/header._TTH_.png" />
-
 
 This Alexa sample skill is a template for a basic trivia skill. Provided a list of interesting questions about a topic, Alexa will select a question at random and ask it of the user when the skill is invoked.
 
