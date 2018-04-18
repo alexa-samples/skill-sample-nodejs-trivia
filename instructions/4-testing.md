@@ -3,7 +3,7 @@
 
 ## Testing Your Alexa Skill
 
-So far, we have [created a Voice User Interface](./1-Voice-User-Interface), [a Lambda function](./2-Lambda-Function), and [connected the two together](./3-Connect-VUI-To-Code).  Your skill is now ready to test.
+So far, we have [created a Voice User Interface](./1-voice-user-interface), [a Lambda function](./2-lambda-function), and [connected the two together](./3-connect-vui-to-code).  Your skill is now ready to test.
 
 1.  **Go back to the [Amazon Developer Portal](https://developer.amazon.com/edw/home.html#/skills/list?&sc_category=Owned&sc_channel=RD&sc_campaign=Evangelism2018&sc_publisher=github&sc_content=Survey&sc_detail=trivia-nodejs-V2_GUI-4&sc_funnel=Convert&sc_country=WW&sc_medium=Owned_RD_Evangelism2018_github_Survey_trivia-nodejs-V2_GUI-4_Convert_WW_beginnersdevs&sc_segment=beginnersdevs) and select your skill from the list.** You may still have a browser tab open if you started at the beginning of this tutorial.
 
@@ -64,5 +64,5 @@ So far, we have [created a Voice User Interface](./1-Voice-User-Interface), [a L
 
 8.  **If your sample skill is working properly, you can now customize your skill.**
 
-[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_customization._TTH_.png)](./5-Customization)
+[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_customization._TTH_.png)](./5-customization)
 n._TTH_.png" /></a>
