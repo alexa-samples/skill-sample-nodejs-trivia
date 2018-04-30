@@ -25,7 +25,7 @@ In the [first step of this guide](./1-voice-user-interface.md), we built the Voi
 
 5.  There are three boxes labeled "Author from scratch", "Blueprints" and "Serverless Application Repository". **Click the radio button in the box titled  "Serverless Application Repository"**  We have created a repository as a shortcut to getting everything set up for your skill.
 
-6. **Search for the application repository named "alexa-skills-kit-nodejs-factskill".** You can find it using the provided search box.  
+6. **Search for the application repository named "alexa-skills-kit-nodejs-triviaskill".** You can find it using the provided search box.  
 
 7. **Click on the repository.** This repository will create the Lambda function, add Alexa Skills Kit as it's trigger, and sets up an IAM role for you. It will also add the code from this GitHub repo and include it's dependencies to your Lambda function so that you don't have to upload it yourself.
 
