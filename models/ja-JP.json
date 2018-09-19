@@ -1,0 +1,72 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "トナカイトリビア",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerIntent",
+          "samples": [
+            "{Answer} です",
+            "答えは {Answer}",
+            "{Answer} かな",
+            "{Answer} だと思う",
+            "{Answer}"
+          ],
+          "slots": [
+            {
+              "name": "Answer",
+              "type": "AMAZON.NUMBER",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "DontKnowIntent",
+          "samples": [
+            "わかりません",
+            "わからない",
+            "知らない",
+            "わかんない",
+            "スキップ",
+            "知りません",
+            "知らん",
+            "意味わかんない"
+          ],
+          "slots": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "ゲーム開始",
+            "新しいゲーム",
+            "開始",
+            "新しいゲームを開始",
+            "やりなおし",
+            "もう一回"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        }
+      ]
+    }
+  }
+}

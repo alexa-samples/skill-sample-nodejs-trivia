@@ -1,13 +1,13 @@
-'use strict';
-
 module.exports = {
-    /**
-     * When editing your questions pay attention to your punctuation. Make sure you use question marks or periods.
-     * Make sure the first answer is the correct one. Set at least ANSWER_COUNT answers, any extras will be shuffled in.
-     */
+  /**
+   * When editing your questions pay attention to your punctuation.
+   * Make sure you use question marks.
+   * Make sure the first answer is the correct one.
+   * Set at least ANSWER_COUNT answers, any extras will be shuffled in.
+   */
     "QUESTIONS_JA_JP" : [
         {
-            "トナカイの毛皮はとても厚いです。1平方インチあたり何本の毛が生えているでしょう？": [
+            "トナカイの毛皮はとても厚いです。1平方インチあたり何本の毛が生えているでしょう?": [
                 "一万三千本",
                 "千二百本",
                 "五千本",
@@ -17,7 +17,7 @@ module.exports = {
             ]
         },
         {
-            "1964年公開の映画、赤鼻のトナカイが撮影されたのはどこ? ": [
+            "1964年公開の映画、赤鼻のトナカイが撮影されたのはどこ?": [
                 "日本",
                 "アメリカ",
                 "フィンランド",
@@ -28,7 +28,7 @@ module.exports = {
             ]
         },
         {
-            "サンタクロースのトナカイはあるクリスマスの妖精が世話をしています。彼の名前は？": [
+            "サンタクロースのトナカイはあるクリスマスの妖精が世話をしています。彼の名前は?": [
                 "ウォンノース・オペンスレー",
                 "アラバスター・スノーボール",
                 "ブッシー・エバーグリーン",
@@ -36,7 +36,7 @@ module.exports = {
             ]
         },
         {
-            "クリスマスの時期にサンタクロースのトナカイ全員にツノが生えているとすると、トナカイの性別は ": [
+            "クリスマスの時期にサンタクロースのトナカイ全員にツノが生えているとすると、トナカイの性別は?": [
                 "全員メス",
                 "全員オス",
                 "オスとメスの両方",
@@ -44,7 +44,7 @@ module.exports = {
             ]
         },
         {
-            "トナカイの餌は何でしょう？": [
+            "トナカイの餌は何でしょう?": [
                 "苔",
                 "草",
                 "葉っぱ",

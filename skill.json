@@ -2,20 +2,20 @@
   "skillManifest": {
     "publishingInformation": {
       "locales": {
-        "en-US": {
-          "summary": "Sample Short Description",
+        "ja-JP": {
+          "summary": "サンプルの概略",
           "examplePhrases": [
-            "Alexa open reindeer trivia",
-            "Alexa tell reindeer trivia to start a game",
-            "Alexa tell reindeer trivia I want to play"
+            "アレクサ、トナカイトレビアを開いて",
+            "アレクサ、トナカイトレビアでゲームをしよう",
+            "アレクサ、トナカイトレビアで遊びたい"
           ],
-          "name": "trivia",
-          "description": "Sample Full Description"
+          "name": "トナカイトレビア",
+          "description": "サンプルの説明"
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Sample Testing Instructions.",
-      "category": "TRIVIA",
+      "testingInstructions": "テスト方法の説明",
+      "category": "EDUCATION_AND_REFERENCE",
       "distributionCountries": []
     },
     "apis": {
