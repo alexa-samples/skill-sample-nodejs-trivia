@@ -1,8 +1,9 @@
 Regions: [🇯🇵](../../tree/ja-JP)
+Regions: [🇺🇸](../../tree/en-US)
 
 
 
-#  Build An Alexa Trivia Skill 🇺🇸
+#  Crea una skill de Trivia con Alexa
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/header._TTH_.png" />
 
 
