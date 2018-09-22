@@ -1,5 +1,4 @@
-Regions: [🇯🇵](../../tree/ja-JP)
-Regions: [🇺🇸](../../tree/en-US)
+Regions: [🇯🇵](../../tree/ja-JP) [🇺🇸](../../tree/en-US)
 
 
 
@@ -8,7 +7,7 @@ Regions: [🇺🇸](../../tree/en-US)
 
 
 
-Este skill ejemplo de Alexa es un "template" para una skill básica de Trivia. Contiene una lista de preguntas acerca de un tema interesante, Alexa seleccionará una pregunta aleatoria y le hará preguntas al usuario cuando la skill sea invocada.
+Este ejemplo es un "template" de una skill de Alexa para una Trivia básica. Contiene una lista de preguntas acerca de un tema interesante, Alexa seleccionará una pregunta aleatoria y le hará preguntas al usuario cuando la skill sea invocada.
 
 <!-- If you would like to see an example of this skill in action, you can enable the [Gloucester Facts](https://www.amazon.com/Robert-McCauley-Gloucester-Facts/dp/B01I5MOIA2/) from the [Alexa Skill Store](http://amazon.com/skills). -->
 
