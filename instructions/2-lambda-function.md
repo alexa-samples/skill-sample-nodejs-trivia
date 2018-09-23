@@ -30,7 +30,7 @@ En el [primer paso de esta guia](./1-voice-user-interface.md), contruimos la Voi
 7. **Click en el repositorio.** Este repositorio va a crear la Lambda function, agrega el Alexa Skills Kit como un trigger (Disparador), y configura "IAM role" para tu rol de seguridad. También agregará codigo de este repositorio de GitHub e incluirá todas las dependencias de la Lambda function así no tendrás que subirlas tu mismo al sistema.
 
     <!-- <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/fact/2-5-blueprint._TTH_.png" />  <!--TODO: THIS IMAGE NEEDS TO BE CUSTOMIZED FOR YOUR SKILL TEMPLATE, THIS ONE IS OUT OF DATE. -->
-8. **Click en el botón deploy ** en la parte inferior de la pagina.
+8. **Click en el botón deploy** en la parte inferior de la pagina.
 
 9. Espera a que el Estatus de todos los recursos cambie a **CREATE_COMPLETE**
 
