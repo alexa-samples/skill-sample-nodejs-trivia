@@ -11,11 +11,11 @@ Hasta ahora, hemos [creado una Voice User Interface](./1-voice-user-interface.md
 
 2. Abre el panel de **Test**, selecionando el link **Test** desde le menú de navegación.
 
-3. Activa la opcioón de prueba activando la opción **Test is enabled for this skill** en el slider. Debe estár en la parte de abajo del menú de navegación.
+3. Activa la opción de prueba activando la opción **Test is enabled for this skill** en el slider. Debe estár en la parte de abajo del menú de navegación.
 
-4. To validate that your skill is working as expected, invoke your skill from the **Alexa Simulator**. You can either type or click and hold the mic from the input box to use your voice.
-	1. **Type** "Open" followed by the invocation name you gave your skill in [Step 1](./1-voice-user-interface.md). For example, "Open Reindeer Trivia".
-	2. **Use your voice** by clicking and holding the mic on the side panel and saying "Open" followed by the invocation name you gave your skill.
+4. Para validar si tu Skill está trabajando como se espera, invoca tu skill desde el **Alexa Simulator**.Tu puedes escribir o dar un click sostenido para usar el microfono de tu computadora para ingresar tu comando de voz.
+	1. **Escribe** "Abrir" seguido del nombre de invocación de tu skill que le diste en el [Paso 1](./1-voice-user-interface.md). Por ejemplo, "Abre Trivia México".
+	2. **Usa tu voz** haciendo click y sosteniendo el microfono en la parte lateral del panel y diciendo "Abrir" seguido del nombre de invocación que tu le diste a tu skill.
 	3. **If you've forgotten the invocation name** for your skill, revisit the **Build** panel on the top navigation menu and select Invocation from the sidebar to review it.
 
 5. Ensure your skill works the way that you designed it to.
