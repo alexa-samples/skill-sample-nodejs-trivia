@@ -1,4 +1,4 @@
-Regions: [🇯🇵](../../tree/ja-JP)
+Regions:  [🇯🇵](../../tree/ja-JP) [🇲🇽](../../tree/es-MX)
 
 
 
