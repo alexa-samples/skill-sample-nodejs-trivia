@@ -8,6 +8,10 @@ const sprintf = require('i18next-sprintf-postprocessor');
 
 const ANSWER_COUNT = 4;
 const GAME_LENGTH = 5;
+const SKILL_NAME = 'Reindeer Trivia';
+const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can ask you questions about reindeer if you say start game. What can I help you with?`;
+const FALLBACK_REPROMPT = 'What can I help you with?';
+
 
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
@@ -340,6 +344,38 @@ const HelpIntent = {
   },
 };
 
+const FallbackHandler = {
+
+  // 2018-May-01: AMAZON.FallackIntent is only currently available in en-US locale.
+
+  //              This handler will not be triggered except in that locale, so it can be
+
+  //              safely deployed for any locale.
+
+  canHandle(handlerInput) {
+
+    const request = handlerInput.requestEnvelope.request;
+
+    return request.type === 'IntentRequest'
+
+      && request.intent.name === 'AMAZON.FallbackIntent';
+
+  },
+
+  handle(handlerInput) {
+
+    return handlerInput.responseBuilder
+
+      .speak(FALLBACK_MESSAGE)
+
+      .reprompt(FALLBACK_REPROMPT)
+
+      .getResponse();
+
+  },
+
+};
+
 const UnhandledIntent = {
   canHandle() {
     return true;
@@ -355,13 +391,13 @@ const UnhandledIntent = {
         .getResponse();
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
-      return handlerInput.attributesManager
+      return handlerInput.responseBuilder
         .speak(speechOutput)
         .reprompt(speechOutput)
         .getResponse();
     }
     const speechOutput = requestAttributes.t('HELP_UNHANDLED');
-    return handlerInput.attributesManager.speak(speechOutput).reprompt(speechOutput).getResponse();
+    return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
   },
 };
 
@@ -487,6 +523,7 @@ exports.handler = skillBuilder
     CancelIntent,
     NoIntent,
     SessionEndedRequest,
+    FallbackHandler,
     UnhandledIntent
   )
   .addRequestInterceptors(LocalizationInterceptor)

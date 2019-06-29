@@ -9,6 +9,7 @@ En el [primer paso de esta guia](./1-voice-user-interface.md), contruimos la Voi
 
 1.  **Va a http://aws.amazon.com y logueate en la consola.** Si no tienes una cuenta, vas a necesitar crear una.  [Si no tienes una cuenta AWS, revisa este sitio para configurarla rapidamente.](https://github.com/alexa/alexa-cookbook/tree/master/aws/set-up-aws.md).
 
+
     [![Developer Console](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-1-sign-in-to-the-console._TTH_.png)](https://console.aws.amazon.com/console/home)
 
 2.  **Click "Services" en la parte superior de la pantalla, y escribe "Lambda" en el recuadro de busqueda.**  Tu puedes encontrar Lambda tambien en la lista de servicios. Está en la sección de "Compute".
@@ -39,6 +40,7 @@ En el [primer paso de esta guia](./1-voice-user-interface.md), contruimos la Voi
 11. **Abre** la función que **acabas de crear** haciendo click en ella.
 
 12. Si quieres agregar seguridad **secure this Lambda function** sigue las instrucciones de [Aquí](https://github.com/alexa/alexa-cookbook/blob/master/aws/secure-lambda-function.md)
+
 
 13. Navega hacia abajo en la pagina hasta que veas **el código de la Función**.
 
