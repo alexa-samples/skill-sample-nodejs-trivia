@@ -12,6 +12,236 @@ const SKILL_NAME = 'Reindeer Trivia';
 const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can ask you questions about reindeer if you say start game. What can I help you with?`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
 
+let mainDataSource =  {
+  "phrase" : {
+    "teaser" : "" ,
+    "completion" : "" ,
+    "properties" :  {
+      "phraseSI" : ""
+    },
+    "transformers": [
+      {
+          "inputPath": "phraseSI",
+          "outputName": "phraseAsSpeech",
+          "transformer": "ssmlToSpeech",
+      }
+    ]
+  },
+  "nextPhrase" : {
+    "teaser" : "" ,
+    "completion" : "" ,
+    "properties" :  {
+      "nextPhraseSI" : ""
+    },
+    "transformers": [
+      {
+          "inputPath": "nextPhraseSI",
+          "outputName": "nextPhraseAsSpeech",
+          "transformer": "ssmlToSpeech"
+      }]
+  }
+};
+
+function supportsDisplay(handlerInput) {
+  return handlerInput.requestEnvelope.context
+      && handlerInput.requestEnvelope.context.System
+      && handlerInput.requestEnvelope.context.System.device
+      && handlerInput.requestEnvelope.context.System.device.supportedInterfaces
+      && (handlerInput.requestEnvelope.context.System.device.supportedInterfaces['Alexa.Presentation.APL']
+        || handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display)
+      && handlerInput.requestEnvelope.context.Viewport;
+}
+
+async function renderPage ( handlerInput, mainDataSource,withReprompt )
+{
+  let responseBuilder = handlerInput.responseBuilder ;
+  let aplDoc = require ('./renderPage.json' ) ; 
+  let tokenId = 'pagerSample';
+  let dataSource =  mainDataSource;
+
+if (withReprompt) {
+ 
+  return responseBuilder
+    .speak("")
+    .reprompt(dataSource.nextPhrase.teaser)
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document : aplDoc  ,
+        datasources : dataSource ,
+        token : tokenId ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : tokenId ,
+          commands :
+          [
+            {
+              "type": "Sequential",
+              "delay": 300,
+              "commands": [
+                {
+                  "type": 'SpeakItem',
+                  "componentId": 'text01',
+                  "highlightMode": 'line',
+                },
+                {
+                  "delay" : "1500" ,
+                  "type": "SetPage",
+                  "componentId": "pagerId",
+                  "position": "relative",
+                  "value": 1
+                },
+                {
+                  "delay" : "500" ,
+                  "type": 'SpeakItem',
+                  "componentId": 'text02',
+                  "highlightMode": 'line',
+                }
+              ]
+            }
+          ]
+        })     
+      .getResponse() ; 
+      }
+      return responseBuilder
+      .speak( "" )
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : aplDoc  ,
+          datasources : dataSource ,
+          token : tokenId ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : tokenId ,
+            commands :
+            [
+              {
+                "type": "Sequential",
+                "delay": 300,
+                "commands": [
+                  {
+                    "type": 'SpeakItem',
+                    "componentId": 'text01',
+                    "highlightMode": 'line',
+                  },
+                  {
+                    "delay" : "1500" ,
+                    "type": "SetPage",
+                    "componentId": "pagerId",
+                    "position": "relative",
+                    "value": 1
+                  },
+                  {
+                    "delay" : "500" ,
+                    "type": 'SpeakItem',
+                    "componentId": 'text02',
+                    "highlightMode": 'line',
+                  }
+                ]
+              }
+            ]
+          })     
+        .getResponse() ; 
+
+
+}
+ 
+async function singleRenderPage ( handlerInput, mainDataSource,withReprompt )
+{
+  let responseBuilder = handlerInput.responseBuilder ;
+  let aplDoc = require ('./renderPage.json' ) ; 
+  let tokenId = 'pagerSample';
+  let dataSource =  mainDataSource;
+
+if (withReprompt) {
+ 
+  return responseBuilder
+    .speak("")
+    .reprompt(dataSource.nextPhrase.teaser)
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document : aplDoc  ,
+        datasources : dataSource ,
+        token : tokenId ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : tokenId ,
+          commands :
+          [
+            {
+              "type": "Sequential",
+              "delay": 300,
+              "commands": [
+                {
+                  "type": 'SpeakItem',
+                  "componentId": 'text01',
+                  "highlightMode": 'line',
+                },
+                {
+                  "delay" : "1500" ,
+                  "type": "SetPage",
+                  "componentId": "pagerId",
+                  "position": "relative",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        })     
+      .getResponse() ; 
+      }
+      
+      return responseBuilder
+      .speak( "" )
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : aplDoc  ,
+          datasources : dataSource ,
+          token : tokenId ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : tokenId ,
+            commands :
+            [
+              {
+                "type": "Sequential",
+                "delay": 300,
+                "commands": [
+                  {
+                    "type": 'SpeakItem',
+                    "componentId": 'text01',
+                    "highlightMode": 'line',
+                  },
+                  {
+                    "delay" : "1500" ,
+                    "type": "SetPage",
+                    "componentId": "pagerId",
+                    "position": "relative",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          })     
+        .getResponse() ; 
+
+
+}
 
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
@@ -92,6 +322,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   let speechOutput = '';
   let speechOutputAnalysis = '';
+  let speechOutput_APL_1 = '';
+  let speechOutput_APL_2 = '';
 
   const sessionAttributes = attributesManager.getSessionAttributes();
   const gameQuestions = sessionAttributes.questions;
@@ -120,13 +352,34 @@ function handleUserGuess(userGaveUp, handlerInput) {
   }
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
+  
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
+    
+    speechOutput_APL_1 = speechOutput + speechOutputAnalysis
+    speechOutput_APL_2 = requestAttributes.t(
+      'GAME_OVER_MESSAGE',
+      currentScore.toString(),
+      GAME_LENGTH.toString()
+    ); 
     speechOutput = userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
     speechOutput += speechOutputAnalysis + requestAttributes.t(
       'GAME_OVER_MESSAGE',
       currentScore.toString(),
       GAME_LENGTH.toString()
     );
+    
+    
+
+
+    
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = speechOutput_APL_1;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
+      mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
+      mainDataSource.nextPhrase.teaser = speechOutput_APL_2;
+    
+      return renderPage ( handlerInput, mainDataSource, false );
+    };
 
     return responseBuilder
       .speak(speechOutput)
@@ -151,11 +404,14 @@ function handleUserGuess(userGaveUp, handlerInput) {
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
     repromptText += `${i + 1}. ${roundAnswers[i]}. `;
   }
-
+  
   speechOutput += userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
+  speechOutput_APL_1 = speechOutput + speechOutputAnalysis + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString());
+  speechOutput_APL_2 = repromptText;
   speechOutput += speechOutputAnalysis
     + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString())
     + repromptText;
+  
 
   const translatedQuestion = translatedQuestions[gameQuestions[currentQuestionIndex]];
 
@@ -169,6 +425,15 @@ function handleUserGuess(userGaveUp, handlerInput) {
     correctAnswerText: translatedQuestion[Object.keys(translatedQuestion)[0]][0]
   });
 
+  if (supportsDisplay(handlerInput)) {
+    mainDataSource.phrase.teaser = speechOutput_APL_1;
+    mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
+    mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
+    mainDataSource.nextPhrase.teaser = speechOutput_APL_2;
+  
+    return renderPage ( handlerInput, mainDataSource, true );
+  };
+
   return responseBuilder.speak(speechOutput)
     .reprompt(repromptText)
     .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
@@ -181,6 +446,7 @@ function startGame(newGame, handlerInput) {
     ? requestAttributes.t('NEW_GAME_MESSAGE', requestAttributes.t('GAME_NAME'))
       + requestAttributes.t('WELCOME_MESSAGE', GAME_LENGTH.toString())
     : '';
+  let speechOutput_APL = speechOutput
   const translatedQuestions = requestAttributes.t('QUESTIONS');
   const gameQuestions = populateGameQuestions(translatedQuestions);
   const correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -194,8 +460,9 @@ function startGame(newGame, handlerInput) {
   const currentQuestionIndex = 0;
   const spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
   let repromptText = requestAttributes.t('TELL_QUESTION_MESSAGE', '1', spokenQuestion);
+
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
-    repromptText += `${i + 1}. ${roundAnswers[i]}. `;
+    repromptText += `${i + 1}.  ${roundAnswers[i]}. `;
   }
 
   speechOutput += repromptText;
@@ -215,11 +482,21 @@ function startGame(newGame, handlerInput) {
 
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
+  if (supportsDisplay(handlerInput)) {
+    mainDataSource.phrase.teaser = speechOutput_APL;
+    mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput_APL + '</speak>';
+    mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + repromptText + '</speak>';
+    mainDataSource.nextPhrase.teaser = repromptText;
+  
+    return renderPage ( handlerInput, mainDataSource, true );
+
+  };
+
   return handlerInput.responseBuilder
-    .speak(speechOutput)
-    .reprompt(repromptText)
-    .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
-    .getResponse();
+  .speak(speechOutput)
+  .reprompt(repromptText)
+  .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
+  .getResponse();
 }
 
 function helpTheUser(newGame, handlerInput) {
@@ -229,7 +506,14 @@ function helpTheUser(newGame, handlerInput) {
     : requestAttributes.t('REPEAT_QUESTION_MESSAGE') + requestAttributes.t('STOP_MESSAGE');
   const speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
   const repromptText = requestAttributes.t('HELP_REPROMPT') + askMessage;
+  
+  if (supportsDisplay(handlerInput)) {
+    mainDataSource.phrase.teaser = speechOutput;
+    mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+    mainDataSource.nextPhrase.properties.teaser = repromptText;
+    return singleRenderPage ( handlerInput, mainDataSource, true );
 
+  };
   return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
 }
 
@@ -385,18 +669,39 @@ const UnhandledIntent = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     if (Object.keys(sessionAttributes).length === 0) {
       const speechOutput = requestAttributes.t('START_UNHANDLED');
+      if (supportsDisplay(handlerInput)) {
+        mainDataSource.phrase.teaser = speechOutput;
+        mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+        mainDataSource.nextPhrase.properties.teaser = speechOutput;
+        return singleRenderPage ( handlerInput, mainDataSource, true );
+    
+      };
       return handlerInput.attributesManager
         .speak(speechOutput)
         .reprompt(speechOutput)
         .getResponse();
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
+      if (supportsDisplay(handlerInput)) {
+        mainDataSource.phrase.teaser = speechOutput;
+        mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+        mainDataSource.nextPhrase.properties.teaser = speechOutput;
+        return singleRenderPage ( handlerInput, mainDataSource, true );
+    
+      };
       return handlerInput.responseBuilder
         .speak(speechOutput)
         .reprompt(speechOutput)
         .getResponse();
     }
     const speechOutput = requestAttributes.t('HELP_UNHANDLED');
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = speechOutput;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      mainDataSource.nextPhrase.properties.teaser = speechOutput;
+      return singleRenderPage ( handlerInput, mainDataSource, true );
+  
+    };
     return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
   },
 };
@@ -433,6 +738,14 @@ const RepeatIntent = {
   },
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = sessionAttributes.speechOutput;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + sessionAttributes.speechOutput + '</speak>';
+      mainDataSource.nextPhrase.properties.teaser = sessionAttributes.repromptText;
+      return singleRenderPage ( handlerInput, mainDataSource, true );
+  
+    };
+    
     return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
       .reprompt(sessionAttributes.repromptText)
       .getResponse();
@@ -447,6 +760,14 @@ const YesIntent = {
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     if (sessionAttributes.questions) {
+      if (supportsDisplay(handlerInput)) {
+        mainDataSource.phrase.teaser = sessionAttributes.speechOutput;
+        mainDataSource.phrase.properties.phraseSI = '<speak>' + sessionAttributes.speechOutput + '</speak>';
+        mainDataSource.nextPhrase.properties.teaser = sessionAttributes.repromptText;
+        return singleRenderPage ( handlerInput, mainDataSource, true );
+    
+      };
+      
       return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
         .reprompt(sessionAttributes.repromptText)
         .getResponse();
@@ -464,7 +785,13 @@ const StopIntent = {
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const speechOutput = requestAttributes.t('STOP_MESSAGE');
-
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = speechOutput;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      mainDataSource.nextPhrase.properties.teaser = speechOutput;
+      return singleRenderPage ( handlerInput, mainDataSource, true );
+  
+    };
     return handlerInput.responseBuilder.speak(speechOutput)
       .reprompt(speechOutput)
       .getResponse();
@@ -479,7 +806,13 @@ const CancelIntent = {
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const speechOutput = requestAttributes.t('CANCEL_MESSAGE');
-
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = speechOutput;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      mainDataSource.nextPhrase.properties.teaser = speechOutput;
+      return singleRenderPage ( handlerInput, mainDataSource, false );
+  
+    };
     return handlerInput.responseBuilder.speak(speechOutput)
       .getResponse();
   },
@@ -493,6 +826,12 @@ const NoIntent = {
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const speechOutput = requestAttributes.t('NO_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = speechOutput;
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      return singleRenderPage ( handlerInput, mainDataSource, false );
+  
+    };
     return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   },
 };
@@ -504,6 +843,13 @@ const ErrorHandler = {
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`);
 
+    if (supportsDisplay(handlerInput)) {
+      mainDataSource.phrase.teaser = 'Sorry, I can\'t understand the command. Please say again.';
+      mainDataSource.phrase.properties.phraseSI = '<speak>' + 'Sorry, I can\'t understand the command. Please say again.' + '</speak>';
+      mainDataSource.nextPhrase.properties.teaser = 'Sorry, I can\'t understand the command. Please say again.';
+      return renderPage ( handlerInput, mainDataSource, true );
+  
+    };
     return handlerInput.responseBuilder
       .speak('Sorry, I can\'t understand the command. Please say again.')
       .reprompt('Sorry, I can\'t understand the command. Please say again.')
@@ -527,5 +873,6 @@ exports.handler = skillBuilder
     UnhandledIntent
   )
   .addRequestInterceptors(LocalizationInterceptor)
+  .addResponseInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
