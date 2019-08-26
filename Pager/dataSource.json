@@ -1,0 +1,30 @@
+{
+  "phrase" : {
+    "teaser" : "" ,
+    "completion" : "" ,
+    "reprompt":"",
+    "properties" :  {
+      "phraseSI" : ""
+    },
+    "transformers": [
+      {
+          "inputPath": "phraseSI",
+          "outputName": "phraseAsSpeech",
+          "transformer": "ssmlToSpeech"
+      }
+    ]
+  },
+  "nextPhrase" : {
+    "teaser" : "none" ,
+    "completion" : "" ,
+    "properties" :  {
+      "nextPhraseSI" : ""
+    },
+    "transformers": [
+      {
+          "inputPath": "nextPhraseSI",
+          "outputName": "nextPhraseAsSpeech",
+          "transformer": "ssmlToSpeech"
+      }]
+  }
+}
