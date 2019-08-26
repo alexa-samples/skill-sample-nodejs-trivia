@@ -11,36 +11,7 @@ const GAME_LENGTH = 5;
 const SKILL_NAME = 'Reindeer Trivia';
 const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can ask you questions about reindeer if you say start game. What can I help you with?`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
-
-let mainDataSource =  {
-  "phrase" : {
-    "teaser" : "" ,
-    "completion" : "" ,
-    "properties" :  {
-      "phraseSI" : ""
-    },
-    "transformers": [
-      {
-          "inputPath": "phraseSI",
-          "outputName": "phraseAsSpeech",
-          "transformer": "ssmlToSpeech",
-      }
-    ]
-  },
-  "nextPhrase" : {
-    "teaser" : "" ,
-    "completion" : "" ,
-    "properties" :  {
-      "nextPhraseSI" : ""
-    },
-    "transformers": [
-      {
-          "inputPath": "nextPhraseSI",
-          "outputName": "nextPhraseAsSpeech",
-          "transformer": "ssmlToSpeech"
-      }]
-  }
-};
+let mainDataSource = require ('./Pager/dataSource.json' );
 
 function supportsDisplay(handlerInput) {
   return handlerInput.requestEnvelope.context
@@ -52,18 +23,22 @@ function supportsDisplay(handlerInput) {
       && handlerInput.requestEnvelope.context.Viewport;
 }
 
-async function renderPage ( handlerInput, mainDataSource,withReprompt )
+async function renderPage ( handlerInput, currDataSource, withReprompt, oneSpeakItem )
 {
   let responseBuilder = handlerInput.responseBuilder ;
-  let aplDoc = require ('./renderPage.json' ) ; 
+  let aplDoc = require ('./Pager/renderPage.json' ) ; 
   let tokenId = 'pagerSample';
-  let dataSource =  mainDataSource;
+  let dataSource = currDataSource;
+  let pagerCommand =  require ('./Pager/twoSpeakItemsCommand.json' ) ;
+  if (oneSpeakItem){
+    pagerCommand =  require ('./Pager/oneSpeakItemCommand.json' ) ;
+  }
 
 if (withReprompt) {
  
   return responseBuilder
     .speak("")
-    .reprompt(dataSource.nextPhrase.teaser)
+    .reprompt(currDataSource.phrase.reprompt)
     .addDirective( 
       {
         type: 'Alexa.Presentation.APL.RenderDocument',
@@ -78,30 +53,7 @@ if (withReprompt) {
           token : tokenId ,
           commands :
           [
-            {
-              "type": "Sequential",
-              "delay": 300,
-              "commands": [
-                {
-                  "type": 'SpeakItem',
-                  "componentId": 'text01',
-                  "highlightMode": 'line',
-                },
-                {
-                  "delay" : "1500" ,
-                  "type": "SetPage",
-                  "componentId": "pagerId",
-                  "position": "relative",
-                  "value": 1
-                },
-                {
-                  "delay" : "500" ,
-                  "type": 'SpeakItem',
-                  "componentId": 'text02',
-                  "highlightMode": 'line',
-                }
-              ]
-            }
+            pagerCommand
           ]
         })     
       .getResponse() ; 
@@ -122,30 +74,7 @@ if (withReprompt) {
             token : tokenId ,
             commands :
             [
-              {
-                "type": "Sequential",
-                "delay": 300,
-                "commands": [
-                  {
-                    "type": 'SpeakItem',
-                    "componentId": 'text01',
-                    "highlightMode": 'line',
-                  },
-                  {
-                    "delay" : "1500" ,
-                    "type": "SetPage",
-                    "componentId": "pagerId",
-                    "position": "relative",
-                    "value": 1
-                  },
-                  {
-                    "delay" : "500" ,
-                    "type": 'SpeakItem',
-                    "componentId": 'text02',
-                    "highlightMode": 'line',
-                  }
-                ]
-              }
+              pagerCommand
             ]
           })     
         .getResponse() ; 
@@ -153,96 +82,6 @@ if (withReprompt) {
 
 }
  
-async function singleRenderPage ( handlerInput, mainDataSource,withReprompt )
-{
-  let responseBuilder = handlerInput.responseBuilder ;
-  let aplDoc = require ('./renderPage.json' ) ; 
-  let tokenId = 'pagerSample';
-  let dataSource =  mainDataSource;
-
-if (withReprompt) {
- 
-  return responseBuilder
-    .speak("")
-    .reprompt(dataSource.nextPhrase.teaser)
-    .addDirective( 
-      {
-        type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
-        document : aplDoc  ,
-        datasources : dataSource ,
-        token : tokenId ,
-      })
-      .addDirective (
-        {
-          type: 'Alexa.Presentation.APL.ExecuteCommands',
-          token : tokenId ,
-          commands :
-          [
-            {
-              "type": "Sequential",
-              "delay": 300,
-              "commands": [
-                {
-                  "type": 'SpeakItem',
-                  "componentId": 'text01',
-                  "highlightMode": 'line',
-                },
-                {
-                  "delay" : "1500" ,
-                  "type": "SetPage",
-                  "componentId": "pagerId",
-                  "position": "relative",
-                  "value": 1
-                }
-              ]
-            }
-          ]
-        })     
-      .getResponse() ; 
-      }
-      
-      return responseBuilder
-      .speak( "" )
-      .addDirective( 
-        {
-          type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
-          document : aplDoc  ,
-          datasources : dataSource ,
-          token : tokenId ,
-        })
-        .addDirective (
-          {
-            type: 'Alexa.Presentation.APL.ExecuteCommands',
-            token : tokenId ,
-            commands :
-            [
-              {
-                "type": "Sequential",
-                "delay": 300,
-                "commands": [
-                  {
-                    "type": 'SpeakItem',
-                    "componentId": 'text01',
-                    "highlightMode": 'line',
-                  },
-                  {
-                    "delay" : "1500" ,
-                    "type": "SetPage",
-                    "componentId": "pagerId",
-                    "position": "relative",
-                    "value": 1
-                  }
-                ]
-              }
-            ]
-          })     
-        .getResponse() ; 
-
-
-}
-
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
   const indexList = [];
@@ -324,6 +163,7 @@ function handleUserGuess(userGaveUp, handlerInput) {
   let speechOutputAnalysis = '';
   let speechOutput_APL_1 = '';
   let speechOutput_APL_2 = '';
+  mainDataSource = require ('./Pager/dataSource.json' );
 
   const sessionAttributes = attributesManager.getSessionAttributes();
   const gameQuestions = sessionAttributes.questions;
@@ -378,7 +218,7 @@ function handleUserGuess(userGaveUp, handlerInput) {
       mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
       mainDataSource.nextPhrase.teaser = speechOutput_APL_2;
     
-      return renderPage ( handlerInput, mainDataSource, false );
+      return renderPage ( handlerInput,mainDataSource, false, false );
     };
 
     return responseBuilder
@@ -426,12 +266,13 @@ function handleUserGuess(userGaveUp, handlerInput) {
   });
 
   if (supportsDisplay(handlerInput)) {
+    
     mainDataSource.phrase.teaser = speechOutput_APL_1;
     mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
     mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
     mainDataSource.nextPhrase.teaser = speechOutput_APL_2;
   
-    return renderPage ( handlerInput, mainDataSource, true );
+    return renderPage ( handlerInput, mainDataSource , true, false );
   };
 
   return responseBuilder.speak(speechOutput)
@@ -446,7 +287,8 @@ function startGame(newGame, handlerInput) {
     ? requestAttributes.t('NEW_GAME_MESSAGE', requestAttributes.t('GAME_NAME'))
       + requestAttributes.t('WELCOME_MESSAGE', GAME_LENGTH.toString())
     : '';
-  let speechOutput_APL = speechOutput
+  let speechOutput_APL = speechOutput;
+  mainDataSource = require ('./Pager/dataSource.json' );
   const translatedQuestions = requestAttributes.t('QUESTIONS');
   const gameQuestions = populateGameQuestions(translatedQuestions);
   const correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -488,7 +330,7 @@ function startGame(newGame, handlerInput) {
     mainDataSource.nextPhrase.properties.nextPhraseSI = '<speak>' + repromptText + '</speak>';
     mainDataSource.nextPhrase.teaser = repromptText;
   
-    return renderPage ( handlerInput, mainDataSource, true );
+    return renderPage ( handlerInput, mainDataSource, true, false );
 
   };
 
@@ -506,12 +348,14 @@ function helpTheUser(newGame, handlerInput) {
     : requestAttributes.t('REPEAT_QUESTION_MESSAGE') + requestAttributes.t('STOP_MESSAGE');
   const speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
   const repromptText = requestAttributes.t('HELP_REPROMPT') + askMessage;
+  mainDataSource = require ('./Pager/dataSource.json' );
   
   if (supportsDisplay(handlerInput)) {
     mainDataSource.phrase.teaser = speechOutput;
     mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-    mainDataSource.nextPhrase.properties.teaser = repromptText;
-    return singleRenderPage ( handlerInput, mainDataSource, true );
+    mainDataSource.phrase.reprompt = repromptText;
+    mainDataSource.nextPhrase.teaser = 'none';
+    return renderPage ( handlerInput, mainDataSource, true, true );
 
   };
   return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
@@ -670,10 +514,12 @@ const UnhandledIntent = {
     if (Object.keys(sessionAttributes).length === 0) {
       const speechOutput = requestAttributes.t('START_UNHANDLED');
       if (supportsDisplay(handlerInput)) {
+        mainDataSource = require ('./Pager/dataSource.json' );
         mainDataSource.phrase.teaser = speechOutput;
         mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-        mainDataSource.nextPhrase.properties.teaser = speechOutput;
-        return singleRenderPage ( handlerInput, mainDataSource, true );
+        mainDataSource.phrase.reprompt = speechOutput;
+        mainDataSource.nextPhrase.teaser = 'none';
+        return renderPage ( handlerInput, mainDataSource, true, true );
     
       };
       return handlerInput.attributesManager
@@ -683,10 +529,12 @@ const UnhandledIntent = {
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
       if (supportsDisplay(handlerInput)) {
+        mainDataSource = require ('./Pager/dataSource.json' );
         mainDataSource.phrase.teaser = speechOutput;
         mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-        mainDataSource.nextPhrase.properties.teaser = speechOutput;
-        return singleRenderPage ( handlerInput, mainDataSource, true );
+        mainDataSource.phrase.reprompt = speechOutput;
+        mainDataSource.nextPhrase.teaser = 'none';
+        return renderPage ( handlerInput, mainDataSource, true, true );
     
       };
       return handlerInput.responseBuilder
@@ -696,10 +544,12 @@ const UnhandledIntent = {
     }
     const speechOutput = requestAttributes.t('HELP_UNHANDLED');
     if (supportsDisplay(handlerInput)) {
+      mainDataSource = require ('./Pager/dataSource.json' );
       mainDataSource.phrase.teaser = speechOutput;
       mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-      mainDataSource.nextPhrase.properties.teaser = speechOutput;
-      return singleRenderPage ( handlerInput, mainDataSource, true );
+      mainDataSource.phrase.reprompt = speechOutput;
+      mainDataSource.nextPhrase.teaser = 'none';
+      return renderPage ( handlerInput, mainDataSource, true, true );
   
     };
     return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
@@ -739,10 +589,12 @@ const RepeatIntent = {
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     if (supportsDisplay(handlerInput)) {
+      mainDataSource = require ('./Pager/dataSource.json' );
       mainDataSource.phrase.teaser = sessionAttributes.speechOutput;
       mainDataSource.phrase.properties.phraseSI = '<speak>' + sessionAttributes.speechOutput + '</speak>';
-      mainDataSource.nextPhrase.properties.teaser = sessionAttributes.repromptText;
-      return singleRenderPage ( handlerInput, mainDataSource, true );
+      mainDataSource.phrase.reprompt = sessionAttributes.repromptText;
+      mainDataSource.nextPhrase.teaser = 'none';
+      return renderPage ( handlerInput, mainDataSource, true, true );
   
     };
     
@@ -761,10 +613,12 @@ const YesIntent = {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     if (sessionAttributes.questions) {
       if (supportsDisplay(handlerInput)) {
+        mainDataSource = require ('./Pager/dataSource.json' );
         mainDataSource.phrase.teaser = sessionAttributes.speechOutput;
         mainDataSource.phrase.properties.phraseSI = '<speak>' + sessionAttributes.speechOutput + '</speak>';
-        mainDataSource.nextPhrase.properties.teaser = sessionAttributes.repromptText;
-        return singleRenderPage ( handlerInput, mainDataSource, true );
+        mainDataSource.phrase.reprompt = sessionAttributes.repromptText;
+        mainDataSource.nextPhrase.teaser = 'none';
+        return renderPage ( handlerInput, mainDataSource, true, true );
     
       };
       
@@ -786,10 +640,12 @@ const StopIntent = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const speechOutput = requestAttributes.t('STOP_MESSAGE');
     if (supportsDisplay(handlerInput)) {
+      mainDataSource = require ('./Pager/dataSource.json' );
       mainDataSource.phrase.teaser = speechOutput;
       mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-      mainDataSource.nextPhrase.properties.teaser = speechOutput;
-      return singleRenderPage ( handlerInput, mainDataSource, true );
+      mainDataSource.phrase.reprompt = speechOutput;
+      mainDataSource.nextPhrase.teaser = 'none';
+      return renderPage ( handlerInput, mainDataSource, true, true );
   
     };
     return handlerInput.responseBuilder.speak(speechOutput)
@@ -807,10 +663,12 @@ const CancelIntent = {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     const speechOutput = requestAttributes.t('CANCEL_MESSAGE');
     if (supportsDisplay(handlerInput)) {
+      mainDataSource = require ('./Pager/dataSource.json' );
       mainDataSource.phrase.teaser = speechOutput;
       mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-      mainDataSource.nextPhrase.properties.teaser = speechOutput;
-      return singleRenderPage ( handlerInput, mainDataSource, false );
+      mainDataSource.phrase.reprompt = speechOutput;
+      mainDataSource.nextPhrase.teaser = 'none';
+      return renderPage ( handlerInput, mainDataSource, false, true );
   
     };
     return handlerInput.responseBuilder.speak(speechOutput)
@@ -829,7 +687,8 @@ const NoIntent = {
     if (supportsDisplay(handlerInput)) {
       mainDataSource.phrase.teaser = speechOutput;
       mainDataSource.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
-      return singleRenderPage ( handlerInput, mainDataSource, false );
+      mainDataSource.nextPhrase.teaser = 'none';
+      return renderPage ( handlerInput, mainDataSource, false, true );
   
     };
     return handlerInput.responseBuilder.speak(speechOutput).getResponse();
@@ -844,10 +703,11 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     if (supportsDisplay(handlerInput)) {
+      mainDataSource = require ('./Pager/dataSource.json' );
       mainDataSource.phrase.teaser = 'Sorry, I can\'t understand the command. Please say again.';
       mainDataSource.phrase.properties.phraseSI = '<speak>' + 'Sorry, I can\'t understand the command. Please say again.' + '</speak>';
-      mainDataSource.nextPhrase.properties.teaser = 'Sorry, I can\'t understand the command. Please say again.';
-      return renderPage ( handlerInput, mainDataSource, true );
+      mainDataSource.phrase.reprompt = 'Sorry, I can\'t understand the command. Please say again.';
+      return renderPage ( handlerInput, true, false );
   
     };
     return handlerInput.responseBuilder
