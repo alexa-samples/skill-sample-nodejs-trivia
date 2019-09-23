@@ -244,6 +244,7 @@ const languageString = {
       ASK_MESSAGE_START: 'Would you like to start playing?',
       HELP_REPROMPT: 'To give an answer to a question, respond with the number of the answer. ',
       STOP_MESSAGE: 'Would you like to keep playing?',
+      QUIT_MESSAGE: 'Good bye.',
       CANCEL_MESSAGE: 'Ok, let\'s play again soon.',
       NO_MESSAGE: 'Ok, we\'ll play another time. Goodbye!',
       TRIVIA_UNHANDLED: 'Try saying a number between 1 and %s',
@@ -281,6 +282,7 @@ const languageString = {
       ASK_MESSAGE_START: 'Möchten Sie beginnen?',
       HELP_REPROMPT: 'Wenn du eine Frage beantworten willst, antworte mit der Zahl, die zur richtigen Antwort gehört. ',
       STOP_MESSAGE: 'Möchtest du weiterspielen?',
+      QUIT_MESSAGE: 'Auf Wiedersehen.',
       CANCEL_MESSAGE: 'OK, dann lass uns bald mal wieder spielen.',
       NO_MESSAGE: 'OK, spielen wir ein andermal. Auf Wiedersehen!',
       TRIVIA_UNHANDLED: 'Sagt eine Zahl beispielsweise zwischen 1 und %s',
@@ -463,10 +465,9 @@ const StopIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('STOP_MESSAGE');
+    const speechOutput = requestAttributes.t('QUIT_MESSAGE');
 
     return handlerInput.responseBuilder.speak(speechOutput)
-      .reprompt(speechOutput)
       .getResponse();
   },
 };
