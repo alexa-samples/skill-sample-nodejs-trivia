@@ -11,8 +11,25 @@ const GAME_LENGTH = 5;
 const SKILL_NAME = 'Reindeer Trivia';
 const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can ask you questions about reindeer if you say start game. What can I help you with?`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
+const APL_DOC = require ('./document/renderPage.json' ) ; 
+const TWO_PAGER_COMMANDS =  require ('./document/twoSpeakItemsCommand.json' ) ;
+const ONE_PAGER_COMMANDS =  require ('./document/oneSpeakItemCommand.json' ) ;
+const TOKEN_ID = 'pagerSample';
+let MAIN_DATA_SOURCE = require ('./document/dataSource.json' );
 
 
+
+function supportsDisplay(handlerInput) {
+  return handlerInput.requestEnvelope.context
+      && handlerInput.requestEnvelope.context.System
+      && handlerInput.requestEnvelope.context.System.device
+      && handlerInput.requestEnvelope.context.System.device.supportedInterfaces
+      && (handlerInput.requestEnvelope.context.System.device.supportedInterfaces['Alexa.Presentation.APL']
+        || handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display)
+      && handlerInput.requestEnvelope.context.Viewport;
+}
+
+ 
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
   const indexList = [];
@@ -92,7 +109,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   let speechOutput = '';
   let speechOutputAnalysis = '';
-
+  let speechOutput_APL_1 = '';
+  let speechOutput_APL_2 = '';
   const sessionAttributes = attributesManager.getSessionAttributes();
   const gameQuestions = sessionAttributes.questions;
   let correctAnswerIndex = parseInt(sessionAttributes.correctAnswerIndex, 10);
@@ -120,13 +138,52 @@ function handleUserGuess(userGaveUp, handlerInput) {
   }
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
+  
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
+    
+    speechOutput_APL_1 = speechOutput + speechOutputAnalysis
+    speechOutput_APL_2 = requestAttributes.t(
+      'GAME_OVER_MESSAGE',
+      currentScore.toString(),
+      GAME_LENGTH.toString()
+    ); 
     speechOutput = userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
     speechOutput += speechOutputAnalysis + requestAttributes.t(
       'GAME_OVER_MESSAGE',
       currentScore.toString(),
       GAME_LENGTH.toString()
     );
+    
+    
+
+
+    
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput_APL_1;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
+      MAIN_DATA_SOURCE.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
+      MAIN_DATA_SOURCE.nextPhrase.teaser = speechOutput_APL_2;
+      speechOutput = "";
+
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : APL_DOC  ,
+          datasources : MAIN_DATA_SOURCE ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              TWO_PAGER_COMMANDS
+            ]
+          }) 
+    };
 
     return responseBuilder
       .speak(speechOutput)
@@ -151,11 +208,14 @@ function handleUserGuess(userGaveUp, handlerInput) {
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
     repromptText += `${i + 1}. ${roundAnswers[i]}. `;
   }
-
+  
   speechOutput += userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
+  speechOutput_APL_1 = speechOutput + speechOutputAnalysis + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString());
+  speechOutput_APL_2 = repromptText;
   speechOutput += speechOutputAnalysis
     + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString())
     + repromptText;
+  
 
   const translatedQuestion = translatedQuestions[gameQuestions[currentQuestionIndex]];
 
@@ -169,6 +229,34 @@ function handleUserGuess(userGaveUp, handlerInput) {
     correctAnswerText: translatedQuestion[Object.keys(translatedQuestion)[0]][0]
   });
 
+  if (supportsDisplay(handlerInput)) {
+    
+    MAIN_DATA_SOURCE.phrase.teaser = speechOutput_APL_1;
+    MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
+    MAIN_DATA_SOURCE.nextPhrase.properties.nextPhraseSI = '<speak>' + speechOutput_APL_2 + '</speak>';
+    MAIN_DATA_SOURCE.nextPhrase.teaser = speechOutput_APL_2;
+    speechOutput = "";
+
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document : APL_DOC  ,
+        datasources : MAIN_DATA_SOURCE ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            TWO_PAGER_COMMANDS
+          ]
+        }) 
+  };
+
   return responseBuilder.speak(speechOutput)
     .reprompt(repromptText)
     .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
@@ -181,6 +269,7 @@ function startGame(newGame, handlerInput) {
     ? requestAttributes.t('NEW_GAME_MESSAGE', requestAttributes.t('GAME_NAME'))
       + requestAttributes.t('WELCOME_MESSAGE', GAME_LENGTH.toString())
     : '';
+  let speechOutput_APL = speechOutput;
   const translatedQuestions = requestAttributes.t('QUESTIONS');
   const gameQuestions = populateGameQuestions(translatedQuestions);
   const correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -194,8 +283,9 @@ function startGame(newGame, handlerInput) {
   const currentQuestionIndex = 0;
   const spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
   let repromptText = requestAttributes.t('TELL_QUESTION_MESSAGE', '1', spokenQuestion);
+
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
-    repromptText += `${i + 1}. ${roundAnswers[i]}. `;
+    repromptText += `${i + 1}.  ${roundAnswers[i]}. `;
   }
 
   speechOutput += repromptText;
@@ -215,11 +305,39 @@ function startGame(newGame, handlerInput) {
 
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
+  if (supportsDisplay(handlerInput)) {
+    
+    MAIN_DATA_SOURCE.phrase.teaser = speechOutput_APL;
+    MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput_APL + '</speak>';
+    MAIN_DATA_SOURCE.nextPhrase.properties.nextPhraseSI = '<speak>' + repromptText + '</speak>';
+    MAIN_DATA_SOURCE.nextPhrase.teaser = repromptText;
+    speechOutput = "";
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document : APL_DOC  ,
+        datasources : MAIN_DATA_SOURCE ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            TWO_PAGER_COMMANDS
+          ]
+        }) 
+
+  };
+
   return handlerInput.responseBuilder
-    .speak(speechOutput)
-    .reprompt(repromptText)
-    .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
-    .getResponse();
+  .speak(speechOutput)
+  .reprompt(repromptText)
+  .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
+  .getResponse();
 }
 
 function helpTheUser(newGame, handlerInput) {
@@ -227,8 +345,36 @@ function helpTheUser(newGame, handlerInput) {
   const askMessage = newGame
     ? requestAttributes.t('ASK_MESSAGE_START')
     : requestAttributes.t('REPEAT_QUESTION_MESSAGE') + requestAttributes.t('STOP_MESSAGE');
-  const speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
+  let speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
   const repromptText = requestAttributes.t('HELP_REPROMPT') + askMessage;
+
+  if (supportsDisplay(handlerInput)) {
+    MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+    MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+    MAIN_DATA_SOURCE.phrase.reprompt = repromptText;
+    MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+    speechOutput = "";
+
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.0',
+        document : APL_DOC  ,
+        datasources : MAIN_DATA_SOURCE ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            ONE_PAGER_COMMANDS
+          ]
+        }) 
+
+  };
 
   return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
 }
@@ -386,20 +532,102 @@ const UnhandledIntent = {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     if (Object.keys(sessionAttributes).length === 0) {
-      const speechOutput = requestAttributes.t('START_UNHANDLED');
+      let speechOutput = requestAttributes.t('START_UNHANDLED');
+      let repromptText = speechOutput
+      if (supportsDisplay(handlerInput)) {
+        MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+        MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+        MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+        MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document : APL_DOC  ,
+            datasources : MAIN_DATA_SOURCE ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            }) 
+      };
       return handlerInput.attributesManager
         .speak(speechOutput)
-        .reprompt(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
+      const repromptText = speechOutput;
+      if (supportsDisplay(handlerInput)) {
+        MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+        MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+        MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+        MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document : APL_DOC  ,
+            datasources : MAIN_DATA_SOURCE ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            }) 
+    
+      };
       return handlerInput.responseBuilder
         .speak(speechOutput)
-        .reprompt(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     }
-    const speechOutput = requestAttributes.t('HELP_UNHANDLED');
-    return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
+    let speechOutput = requestAttributes.t('HELP_UNHANDLED');
+    const repromptText = speechOutput;
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+      MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+      speechOutput = "";
+      handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document : APL_DOC  ,
+            datasources : MAIN_DATA_SOURCE ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            }) 
+  
+    };
+    return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
   },
 };
 
@@ -435,8 +663,38 @@ const RepeatIntent = {
   },
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-    return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
-      .reprompt(sessionAttributes.repromptText)
+    let speechOutput = sessionAttributes.speechOutput;
+    let repromptText = sessionAttributes.repromptText;
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.phrase.reprompt = repromptText;
+      MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+      speechOutput = "";
+
+      handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document : APL_DOC  ,
+            datasources : MAIN_DATA_SOURCE ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            }) 
+  
+    };
+    
+    return handlerInput.responseBuilder.speak(speechOutput)
+      .reprompt(repromptText)
       .getResponse();
   },
 };
@@ -448,9 +706,38 @@ const YesIntent = {
   },
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    let speechOutput = sessionAttributes.speechOutput;
+    let repromptText = sessionAttributes.repromptText;
     if (sessionAttributes.questions) {
-      return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
-        .reprompt(sessionAttributes.repromptText)
+      if (supportsDisplay(handlerInput)) {
+        MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+        MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+        MAIN_DATA_SOURCE.phrase.reprompt = repromptText;
+        MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.0',
+            document : APL_DOC  ,
+            datasources : MAIN_DATA_SOURCE ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            }) 
+      };
+      
+      return handlerInput.responseBuilder.speak(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     }
     return startGame(false, handlerInput);
@@ -465,8 +752,35 @@ const StopIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('QUIT_MESSAGE');
+    let speechOutput = requestAttributes.t('QUIT_MESSAGE');
+    const repromptText = speechOutput;
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+      MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+      speechOutput = "";
 
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : APL_DOC  ,
+          datasources : MAIN_DATA_SOURCE ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          }) 
+  
+    };
     return handlerInput.responseBuilder.speak(speechOutput)
       .getResponse();
   },
@@ -479,8 +793,32 @@ const CancelIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('CANCEL_MESSAGE');
-
+    let speechOutput = requestAttributes.t('CANCEL_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+      MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : APL_DOC  ,
+          datasources : MAIN_DATA_SOURCE ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          }) 
+    };
     return handlerInput.responseBuilder.speak(speechOutput)
       .getResponse();
   },
@@ -493,7 +831,31 @@ const NoIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('NO_MESSAGE');
+    let speechOutput = requestAttributes.t('NO_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.nextPhrase.teaser = 'none';
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : APL_DOC  ,
+          datasources : MAIN_DATA_SOURCE ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          }) 
+    };
     return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   },
 };
@@ -504,10 +866,36 @@ const ErrorHandler = {
   },
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`);
+    let speechOutput = 'Sorry, I can\'t understand the command. Please say again.';
+    const repromptText = speechOutput
+    if (supportsDisplay(handlerInput)) {
 
+      MAIN_DATA_SOURCE.phrase.teaser = speechOutput;
+      MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput + '</speak>';
+      MAIN_DATA_SOURCE.phrase.reprompt = speechOutput;
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document : APL_DOC  ,
+          datasources : MAIN_DATA_SOURCE ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              TWO_PAGER_COMMANDS
+            ]
+          }) 
+    };
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak(speechOutput)
+      .reprompt(repromptText)
       .getResponse();
   },
 };
@@ -528,5 +916,6 @@ exports.handler = skillBuilder
     UnhandledIntent
   )
   .addRequestInterceptors(LocalizationInterceptor)
+  .addResponseInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
