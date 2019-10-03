@@ -17,8 +17,6 @@ const ONE_PAGER_COMMANDS =  require ('./document/oneSpeakItemCommand.json' ) ;
 const TOKEN_ID = 'pagerSample';
 let MAIN_DATA_SOURCE = require ('./document/dataSource.json' );
 
-
-
 function supportsDisplay(handlerInput) {
   return handlerInput.requestEnvelope.context
       && handlerInput.requestEnvelope.context.System
@@ -28,7 +26,6 @@ function supportsDisplay(handlerInput) {
         || handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display)
       && handlerInput.requestEnvelope.context.Viewport;
 }
-
  
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
@@ -138,9 +135,7 @@ function handleUserGuess(userGaveUp, handlerInput) {
   }
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
-  
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
-    
     speechOutput_APL_1 = speechOutput + speechOutputAnalysis
     speechOutput_APL_2 = requestAttributes.t(
       'GAME_OVER_MESSAGE',
@@ -154,10 +149,6 @@ function handleUserGuess(userGaveUp, handlerInput) {
       GAME_LENGTH.toString()
     );
     
-    
-
-
-    
     if (supportsDisplay(handlerInput)) {
       MAIN_DATA_SOURCE.phrase.teaser = speechOutput_APL_1;
       MAIN_DATA_SOURCE.phrase.properties.phraseSI = '<speak>' + speechOutput_APL_1 + '</speak>';
@@ -169,7 +160,7 @@ function handleUserGuess(userGaveUp, handlerInput) {
       .addDirective( 
         {
           type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
+          version: '1.1',
           document : APL_DOC  ,
           datasources : MAIN_DATA_SOURCE ,
           token : TOKEN_ID ,
@@ -241,7 +232,7 @@ function handleUserGuess(userGaveUp, handlerInput) {
     .addDirective( 
       {
         type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
+        version: '1.1',
         document : APL_DOC  ,
         datasources : MAIN_DATA_SOURCE ,
         token : TOKEN_ID ,
@@ -316,7 +307,7 @@ function startGame(newGame, handlerInput) {
     .addDirective( 
       {
         type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
+        version: '1.1',
         document : APL_DOC  ,
         datasources : MAIN_DATA_SOURCE ,
         token : TOKEN_ID ,
@@ -334,10 +325,10 @@ function startGame(newGame, handlerInput) {
   };
 
   return handlerInput.responseBuilder
-  .speak(speechOutput)
-  .reprompt(repromptText)
-  .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
-  .getResponse();
+    .speak(speechOutput)
+    .reprompt(repromptText)
+    .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
+    .getResponse();
 }
 
 function helpTheUser(newGame, handlerInput) {
@@ -359,7 +350,7 @@ function helpTheUser(newGame, handlerInput) {
     .addDirective( 
       {
         type: 'Alexa.Presentation.APL.RenderDocument',
-        version: '1.0',
+        version: '1.1',
         document : APL_DOC  ,
         datasources : MAIN_DATA_SOURCE ,
         token : TOKEN_ID ,
@@ -545,7 +536,7 @@ const UnhandledIntent = {
         .addDirective( 
           {
             type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
+            version: '1.1',
             document : APL_DOC  ,
             datasources : MAIN_DATA_SOURCE ,
             token : TOKEN_ID ,
@@ -578,7 +569,7 @@ const UnhandledIntent = {
         .addDirective( 
           {
             type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
+            version: '1.1',
             document : APL_DOC  ,
             datasources : MAIN_DATA_SOURCE ,
             token : TOKEN_ID ,
@@ -611,7 +602,7 @@ const UnhandledIntent = {
         .addDirective( 
           {
             type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
+            version: '1.1',
             document : APL_DOC  ,
             datasources : MAIN_DATA_SOURCE ,
             token : TOKEN_ID ,
@@ -676,7 +667,7 @@ const RepeatIntent = {
         .addDirective( 
           {
             type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
+            version: '1.1',
             document : APL_DOC  ,
             datasources : MAIN_DATA_SOURCE ,
             token : TOKEN_ID ,
@@ -720,7 +711,7 @@ const YesIntent = {
         .addDirective( 
           {
             type: 'Alexa.Presentation.APL.RenderDocument',
-            version: '1.0',
+            version: '1.1',
             document : APL_DOC  ,
             datasources : MAIN_DATA_SOURCE ,
             token : TOKEN_ID ,
@@ -765,7 +756,7 @@ const StopIntent = {
       .addDirective( 
         {
           type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
+          version: '1.1',
           document : APL_DOC  ,
           datasources : MAIN_DATA_SOURCE ,
           token : TOKEN_ID ,
@@ -804,7 +795,7 @@ const CancelIntent = {
       .addDirective( 
         {
           type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
+          version: '1.1',
           document : APL_DOC  ,
           datasources : MAIN_DATA_SOURCE ,
           token : TOKEN_ID ,
@@ -841,7 +832,7 @@ const NoIntent = {
       .addDirective( 
         {
           type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
+          version: '1.1',
           document : APL_DOC  ,
           datasources : MAIN_DATA_SOURCE ,
           token : TOKEN_ID ,
@@ -878,7 +869,7 @@ const ErrorHandler = {
       .addDirective( 
         {
           type: 'Alexa.Presentation.APL.RenderDocument',
-          version: '1.0',
+          version: '1.1',
           document : APL_DOC  ,
           datasources : MAIN_DATA_SOURCE ,
           token : TOKEN_ID ,
@@ -916,6 +907,5 @@ exports.handler = skillBuilder
     UnhandledIntent
   )
   .addRequestInterceptors(LocalizationInterceptor)
-  .addResponseInterceptors(LocalizationInterceptor)
   .addErrorHandlers(ErrorHandler)
   .lambda();
