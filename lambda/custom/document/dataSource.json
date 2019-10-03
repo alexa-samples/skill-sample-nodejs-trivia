@@ -25,6 +25,7 @@
           "inputPath": "nextPhraseSI",
           "outputName": "nextPhraseAsSpeech",
           "transformer": "ssmlToSpeech"
-      }]
+      }
+    ]
   }
 }
