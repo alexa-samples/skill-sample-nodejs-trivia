@@ -1,6 +1,6 @@
 {
     "type": "APL",
-    "version": "1.1",
+    "version": "1.0",
     "settings": {},
     "theme": "dark",
     "import": [
@@ -10,13 +10,13 @@
             } 
         ],
     "resources": [
-        { 
-            "colors" : {
-               "SkillBackgroundColor" : "blue" , 
-               "SkillHighlightTextColor"  : "yellow" , 
-               "SkillTextColor" : "white"
-            }
-        } 
+            { 
+                "colors" : {
+                   "SkillBackgroundColor" : "blue" , 
+                   "SkillHighlightTextColor"  : "yellow" , 
+                   "SkillTextColor" : "white"
+                }
+            } 
         ],
     "styles": {},
     "onMount": [],
@@ -27,12 +27,10 @@
         { 
             "parameters" :  [
                 "text", 
-                "speech", 
-                "cid" 
+                "speech"
                 ] , 
             "item" : 
             {
-                "id" : "${cid}" , 
                 "type" : "Text", 
                 "text" : "${text}", 
                 "speech" : "${speech}", 
@@ -49,9 +47,9 @@
             "type" : "Frame" , 
             "item" : { 
                 "type" : "Image" , 
-                "source" : "", 
-                "height": 36,
-                "width": 36
+                "source" : "",
+                "height": "36",
+                "width":"36"
             } 
         } 
     },
@@ -92,7 +90,7 @@
                                     "width" : "80vw" , 
                                     "height" : "100vh" , 
                                     "paddingLeft" : "10vw", 
-                                    "cid" : "text01" , 
+                                    "id" : "text01" , 
                                     "speech" : "${payload.phrase.properties.phraseAsSpeech}"
                             } ]
                         }, 
@@ -103,7 +101,6 @@
                             "height" : "100vh" , 
                             "direction" : "row" , 
                             "items" : [ 
-
                             {
                                 "when": "${@viewportProfile != @hubRoundSmall}",
                                 "type" : "SkillLogo"  , 
@@ -120,7 +117,7 @@
                                     "height" : "100vh" , 
                                     "paddingLeft" : "10vw", 
                                     "speech" : "${payload.nextPhrase.properties.nextPhraseAsSpeech}", 
-                                    "cid" : "text02"
+                                    "id" : "text02"
                             } ]
                         }
                     ]
