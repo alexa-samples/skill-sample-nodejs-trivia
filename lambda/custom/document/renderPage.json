@@ -86,7 +86,7 @@
                             }, 
                             { 
                                     "type" : "CenteredText" , 
-                                    "text" : "${payload.phrase.teaser}<b><i>${payload.phrase.completion}</i></b>", 
+                                    "text" : "${payload.phrase.teaser}", 
                                     "width" : "80vw" , 
                                     "height" : "100vh" , 
                                     "paddingLeft" : "10vw", 
@@ -112,7 +112,7 @@
                             }, 
                             { 
                                     "type" : "CenteredText" , 
-                                    "text" : "${payload.nextPhrase.properties.nextPhraseSI}", 
+                                    "text" : "${payload.nextPhrase.teaser}", 
                                     "width" : "80vw" , 
                                     "height" : "100vh" , 
                                     "paddingLeft" : "10vw", 
