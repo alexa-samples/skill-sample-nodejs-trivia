@@ -15,29 +15,30 @@ const APL_DOC = require ('./document/renderPage.json' ) ;
 const TWO_PAGER_COMMANDS =  require ('./document/twoSpeakItemsCommand.json' ) ;
 const ONE_PAGER_COMMANDS =  require ('./document/oneSpeakItemCommand.json' ) ;
 const TOKEN_ID = 'pagerSample';
-let firstTransformer = [
+let firstTransformerList = [
       {
-          "inputPath": "phraseSI",
+          "inputPath": "phraseSsml",
           "outputName": "phraseAsSpeech",
           "transformer": "ssmlToSpeech"
       }
     ];
-let secondTransformer = [
+let secondTransformerList = [
       {
-          "inputPath": "phraseSI",
+          "inputPath": "phraseSsml",
           "outputName": "nextPhraseAsSpeech",
           "transformer": "ssmlToSpeech"
       }
     ];
 
-function makePage(teaser="",reprompt="",firstProperty="",transformer=[]) {
+function makePage(phraseText="",repromptText="",phraseSSMLProperty="",transformerList=[]) {
   return {
-    "teaser" : teaser ,
-    "reprompt":reprompt,
+    "phraseText" : phraseText ,
+    "repromptText":repromptText,
     "properties" :  {
-      "phraseSI" : firstProperty
+      "phraseSsml" : phraseSSMLProperty,
+      "logoUrl": ""
     },
-    "transformers": transformer
+    "transformers": transformerList
   };
 }
 
@@ -51,7 +52,6 @@ function supportsDisplay(handlerInput) {
       && handlerInput.requestEnvelope.context.Viewport;
 }
 
- 
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
   const indexList = [];
@@ -131,8 +131,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   let speechOutput = '';
   let speechOutputAnalysis = '';
-  let aplFirstPage = '';
-  let aplSecondPage = '';
+  let aplFirstPageSpeechOutput = '';
+  let aplSecondPageSpeechOutput = '';
   const sessionAttributes = attributesManager.getSessionAttributes();
   const gameQuestions = sessionAttributes.questions;
   let correctAnswerIndex = parseInt(sessionAttributes.correctAnswerIndex, 10);
@@ -161,8 +161,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
-    aplFirstPage = speechOutput + speechOutputAnalysis;
-    aplSecondPage = requestAttributes.t(
+    aplFirstPageSpeechOutput = speechOutput + speechOutputAnalysis;
+    aplSecondPageSpeechOutput = requestAttributes.t(
       'GAME_OVER_MESSAGE',
       currentScore.toString(),
       GAME_LENGTH.toString()
@@ -176,8 +176,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
     
     if (supportsDisplay(handlerInput)) {
       let payload = {
-                "phrase": makePage(aplFirstPage,"",`<speak>${aplFirstPage}</speak>`,firstTransformer),
-                "nextPhrase": makePage(aplSecondPage,"",`<speak>${aplSecondPage}</speak>`,secondTransformer)
+                "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+                "nextPhrase": makePage(aplSecondPageSpeechOutput,"",`<speak>${aplSecondPageSpeechOutput}</speak>`,secondTransformerList)
                 };
       speechOutput = "";
 
@@ -226,8 +226,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
   }
   
   speechOutput += userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
-  aplFirstPage = speechOutput + speechOutputAnalysis + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString());
-  aplSecondPage = repromptText;
+  aplFirstPageSpeechOutput = speechOutput + speechOutputAnalysis + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString());
+  aplSecondPageSpeechOutput = repromptText;
   speechOutput += speechOutputAnalysis
     + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString())
     + repromptText;
@@ -247,8 +247,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   if (supportsDisplay(handlerInput)) {
     let payload = {
-      "phrase": makePage(aplFirstPage,"",`<speak>${aplFirstPage}</speak>`,firstTransformer),
-      "nextPhrase": makePage(aplSecondPage,"",`<speak>${aplSecondPage}</speak>`,secondTransformer)};
+      "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+      "nextPhrase": makePage(aplSecondPageSpeechOutput,"",`<speak>${aplSecondPageSpeechOutput}</speak>`,secondTransformerList)};
     speechOutput = "";
 
     handlerInput.responseBuilder
@@ -283,7 +283,7 @@ function startGame(newGame, handlerInput) {
     ? requestAttributes.t('NEW_GAME_MESSAGE', requestAttributes.t('GAME_NAME'))
       + requestAttributes.t('WELCOME_MESSAGE', GAME_LENGTH.toString())
     : '';
-  let aplFirstPage = speechOutput;
+  let aplFirstPageSpeechOutput = speechOutput;
   const translatedQuestions = requestAttributes.t('QUESTIONS');
   const gameQuestions = populateGameQuestions(translatedQuestions);
   const correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -321,8 +321,8 @@ function startGame(newGame, handlerInput) {
 
   if (supportsDisplay(handlerInput)) {
     let payload = {
-      "phrase": makePage(aplFirstPage,"",`<speak>${aplFirstPage}</speak>`,firstTransformer),
-      "nextPhrase": makePage(repromptText,"",`<speak>${repromptText}</speak>`,secondTransformer)};
+      "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+      "nextPhrase": makePage(repromptText,"",`<speak>${repromptText}</speak>`,secondTransformerList)};
     speechOutput = "";
     handlerInput.responseBuilder
     .addDirective( 
@@ -361,8 +361,8 @@ function helpTheUser(newGame, handlerInput) {
 
   if (supportsDisplay(handlerInput)) {
     let payload = {
-        "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
     speechOutput = "";
 
@@ -546,8 +546,8 @@ const UnhandledIntent = {
       let repromptText = speechOutput;
       if (supportsDisplay(handlerInput)) {
         let payload = {
-          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
           };
         speechOutput = "";
 
@@ -579,8 +579,8 @@ const UnhandledIntent = {
       const repromptText = speechOutput;
       if (supportsDisplay(handlerInput)) {
         let payload = {
-          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
           };
         speechOutput = "";
 
@@ -612,8 +612,8 @@ const UnhandledIntent = {
     const repromptText = speechOutput;
     if (supportsDisplay(handlerInput)) {
       let payload = {
-        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
       };
       speechOutput = "";
       handlerInput.responseBuilder
@@ -675,8 +675,8 @@ const RepeatIntent = {
     let repromptText = sessionAttributes.repromptText;
     if (supportsDisplay(handlerInput)) {
         let payload = {
-          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformer),
-          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
         speechOutput = "";
 
@@ -718,8 +718,8 @@ const YesIntent = {
     if (sessionAttributes.questions) {
       if (supportsDisplay(handlerInput)) {
         let payload = {
-          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformer),
-          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
         speechOutput = "";
 
@@ -762,8 +762,8 @@ const StopIntent = {
     let speechOutput = requestAttributes.t('QUIT_MESSAGE');
     if (supportsDisplay(handlerInput)) {
       let payload = {
-        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
       speechOutput = "";
 
@@ -801,8 +801,8 @@ const CancelIntent = {
     let speechOutput = requestAttributes.t('CANCEL_MESSAGE');
     if (supportsDisplay(handlerInput)) {
       let payload = {
-        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
       speechOutput = "";
       handlerInput.responseBuilder
@@ -839,8 +839,8 @@ const NoIntent = {
     let speechOutput = requestAttributes.t('NO_MESSAGE');
     if (supportsDisplay(handlerInput)) {
       let payload = {
-        "phrase": makePage(speechOutput,"",`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,"",`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
       speechOutput = "";
       handlerInput.responseBuilder
@@ -876,8 +876,8 @@ const ErrorHandler = {
     const repromptText = speechOutput;
     if (supportsDisplay(handlerInput)) {
       let payload = {
-        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformer),
-        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformer)
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
         };
       speechOutput = "";
       handlerInput.responseBuilder
