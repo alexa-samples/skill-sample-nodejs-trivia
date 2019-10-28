@@ -47,7 +47,7 @@
             "type" : "Frame" , 
             "item" : { 
                 "type" : "Image" , 
-                "source" : "${payload.phrase.properties.logoUrl}",
+                "source" : "${payload.properties.logoUrl}",
                 "height": "36",
                 "width":"36"
             } 
