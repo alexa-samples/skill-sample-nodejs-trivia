@@ -15,14 +15,14 @@ const APL_DOC = require ('./document/renderPage.json' ) ;
 const TWO_PAGER_COMMANDS =  require ('./document/twoSpeakItemsCommand.json' ) ;
 const ONE_PAGER_COMMANDS =  require ('./document/oneSpeakItemCommand.json' ) ;
 const TOKEN_ID = 'pagerSample';
-let firstTransformerList = [
+const firstTransformerList = [
       {
           "inputPath": "phraseSsml",
           "outputName": "phraseAsSpeech",
           "transformer": "ssmlToSpeech"
       }
     ];
-let secondTransformerList = [
+const secondTransformerList = [
       {
           "inputPath": "phraseSsml",
           "outputName": "nextPhraseAsSpeech",
