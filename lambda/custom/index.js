@@ -786,6 +786,7 @@ const StopIntent = {
           });
     }
     return handlerInput.responseBuilder.speak(speechOutput)
+      .withShouldEndSession(true)
       .getResponse();
   },
 };
