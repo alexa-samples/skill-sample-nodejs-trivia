@@ -1,0 +1,24 @@
+{
+  "type": "Sequential",
+  "delay": 300,
+  "commands": [
+    {
+      "type": "SpeakItem",
+      "componentId": "text01",
+      "highlightMode": "line"
+    },
+    {
+      "delay" : "100" ,
+      "type": "SetPage",
+      "componentId": "pagerId",
+      "position": "relative",
+      "value": 1
+    },
+    {
+      "delay" : "500" ,
+      "type": "SpeakItem",
+      "componentId": "text02",
+      "highlightMode": "line"
+    }
+  ]
+}

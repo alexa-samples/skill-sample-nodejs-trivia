@@ -1,0 +1,128 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "settings": {},
+    "theme": "dark",
+    "import": [
+            { 
+                "name" : "alexa-styles", 
+                "version" : "1.0.0" 
+            } 
+        ],
+    "resources": [
+            { 
+                "colors" : {
+                   "SkillBackgroundColor" : "blue" , 
+                   "SkillHighlightTextColor"  : "yellow" , 
+                   "SkillTextColor" : "white"
+                }
+            } 
+        ],
+    "styles": {},
+    "onMount": [],
+    "graphics": {},
+    "commands": {},
+    "layouts": {
+        "CenteredText" : 
+        { 
+            "parameters" :  [
+                "text", 
+                "speech"
+                ] , 
+            "item" : 
+            {
+                "type" : "Text", 
+                "text" : "${text}", 
+                "speech" : "${speech}", 
+                "textAlign" : "center" , 
+                "color" :  "@SkillTextColor" , 
+                "width" : "50%", 
+                "height" : "100%" , 
+                "textAlignVertical": "center" ,  
+                "fontSize" : "@fontSizeRegular" 
+            }
+        }, 
+        "SkillLogo" : 
+        { 
+            "type" : "Frame" , 
+            "item" : { 
+                "type" : "Image" , 
+                "source" : "${payload.properties.logoUrl}",
+                "height": "36",
+                "width":"36"
+            } 
+        } 
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            { 
+                "type" : "Frame" , 
+                  "backgroundColor" : "@SkillBackgroundColor"  , 
+                  "width" : "100vw" , 
+                  "height" : "100vh" , 
+                  "item" : { 
+                    "type": "Pager",
+                    "width" : "100vw" , 
+                    "height" : "100vh" , 
+                    "id" : "pagerId" ,    
+                    "items": [
+                        {
+                            "type" : "Container" , 
+                            "width" : "100vw" , 
+                            "height" : "100vh" , 
+                            "direction" : "row" , 
+                            "items" : [ 
+                            {
+                                "when": "${@viewportProfile != @hubRoundSmall}",
+                                "type" : "SkillLogo"  , 
+                                "position" : "absolute" , 
+                                "right" : "5vw" ,  
+                                "top" : "5vh" , 
+                                "width": "15vw" , 
+                                "height" : "15vh"
+                            }, 
+                            { 
+                                    "type" : "CenteredText" , 
+                                    "text" : "${payload.phrase.phraseText}", 
+                                    "width" : "80vw" , 
+                                    "height" : "100vh" , 
+                                    "paddingLeft" : "10vw", 
+                                    "id" : "text01" , 
+                                    "speech" : "${payload.phrase.properties.phraseAsSpeech}"
+                            } ]
+                        }, 
+                        {
+                            "when": "${payload.nextPhrase.phraseText != 'none'}",
+                            "type" : "Container" , 
+                            "width" : "100vw" , 
+                            "height" : "100vh" , 
+                            "direction" : "row" , 
+                            "items" : [ 
+                            {
+                                "when": "${@viewportProfile != @hubRoundSmall}",
+                                "type" : "SkillLogo"  , 
+                                "position" : "absolute" , 
+                                "right" : "5vw" ,  
+                                "top" : "5vh" , 
+                                "width": "15vw" , 
+                                "height" : "15vh"
+                            }, 
+                            { 
+                                    "type" : "CenteredText" , 
+                                    "text" : "${payload.nextPhrase.properties.phraseSsml}", 
+                                    "width" : "80vw" , 
+                                    "height" : "100vh" , 
+                                    "paddingLeft" : "10vw", 
+                                    "speech" : "${payload.nextPhrase.properties.nextPhraseAsSpeech}", 
+                                    "id" : "text02"
+                            } ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

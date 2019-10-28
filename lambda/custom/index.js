@@ -11,7 +11,45 @@ const GAME_LENGTH = 5;
 const SKILL_NAME = 'Reindeer Trivia';
 const FALLBACK_MESSAGE = `The ${SKILL_NAME} skill can\'t help you with that.  It can ask you questions about reindeer if you say start game. What can I help you with?`;
 const FALLBACK_REPROMPT = 'What can I help you with?';
+const APL_DOC = require ('./document/renderPage.json' ) ; 
+const TWO_PAGER_COMMANDS =  require ('./document/twoSpeakItemsCommand.json' ) ;
+const ONE_PAGER_COMMANDS =  require ('./document/oneSpeakItemCommand.json' ) ;
+const TOKEN_ID = 'pagerSample';
+const firstTransformerList = [
+      {
+          "inputPath": "phraseSsml",
+          "outputName": "phraseAsSpeech",
+          "transformer": "ssmlToSpeech"
+      }
+    ];
+const secondTransformerList = [
+      {
+          "inputPath": "phraseSsml",
+          "outputName": "nextPhraseAsSpeech",
+          "transformer": "ssmlToSpeech"
+      }
+    ];
 
+function makePage(phraseText="",repromptText="",phraseSSMLProperty="",transformerList=[]) {
+  return {
+    "phraseText" : phraseText ,
+    "repromptText":repromptText,
+    "properties" :  {
+      "phraseSsml" : phraseSSMLProperty
+    },
+    "transformers": transformerList
+  };
+}
+
+function supportsDisplay(handlerInput) {
+  return handlerInput.requestEnvelope.context
+      && handlerInput.requestEnvelope.context.System
+      && handlerInput.requestEnvelope.context.System.device
+      && handlerInput.requestEnvelope.context.System.device.supportedInterfaces
+      && (handlerInput.requestEnvelope.context.System.device.supportedInterfaces['Alexa.Presentation.APL']
+        || handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display)
+      && handlerInput.requestEnvelope.context.Viewport;
+}
 
 function populateGameQuestions(translatedQuestions) {
   const gameQuestions = [];
@@ -92,7 +130,8 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   let speechOutput = '';
   let speechOutputAnalysis = '';
-
+  let aplFirstPageSpeechOutput = '';
+  let aplSecondPageSpeechOutput = '';
   const sessionAttributes = attributesManager.getSessionAttributes();
   const gameQuestions = sessionAttributes.questions;
   let correctAnswerIndex = parseInt(sessionAttributes.correctAnswerIndex, 10);
@@ -121,12 +160,45 @@ function handleUserGuess(userGaveUp, handlerInput) {
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
+    aplFirstPageSpeechOutput = speechOutput + speechOutputAnalysis;
+    aplSecondPageSpeechOutput = requestAttributes.t(
+      'GAME_OVER_MESSAGE',
+      currentScore.toString(),
+      GAME_LENGTH.toString()
+    ); 
     speechOutput = userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
     speechOutput += speechOutputAnalysis + requestAttributes.t(
       'GAME_OVER_MESSAGE',
       currentScore.toString(),
       GAME_LENGTH.toString()
     );
+    
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+                "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+                "nextPhrase": makePage(aplSecondPageSpeechOutput,"",`<speak>${aplSecondPageSpeechOutput}</speak>`,secondTransformerList)
+                };
+      speechOutput = "";
+
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.1',
+          document : APL_DOC  ,
+          datasources : payload,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              TWO_PAGER_COMMANDS
+            ]
+          });
+    }
 
     return responseBuilder
       .speak(speechOutput)
@@ -151,11 +223,14 @@ function handleUserGuess(userGaveUp, handlerInput) {
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
     repromptText += `${i + 1}. ${roundAnswers[i]}. `;
   }
-
+  
   speechOutput += userGaveUp ? '' : requestAttributes.t('ANSWER_IS_MESSAGE');
+  aplFirstPageSpeechOutput = speechOutput + speechOutputAnalysis + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString());
+  aplSecondPageSpeechOutput = repromptText;
   speechOutput += speechOutputAnalysis
     + requestAttributes.t('SCORE_IS_MESSAGE', currentScore.toString())
     + repromptText;
+  
 
   const translatedQuestion = translatedQuestions[gameQuestions[currentQuestionIndex]];
 
@@ -169,6 +244,32 @@ function handleUserGuess(userGaveUp, handlerInput) {
     correctAnswerText: translatedQuestion[Object.keys(translatedQuestion)[0]][0]
   });
 
+  if (supportsDisplay(handlerInput)) {
+    let payload = {
+      "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+      "nextPhrase": makePage(aplSecondPageSpeechOutput,"",`<speak>${aplSecondPageSpeechOutput}</speak>`,secondTransformerList)};
+    speechOutput = "";
+
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.1',
+        document : APL_DOC  ,
+        datasources : payload ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            TWO_PAGER_COMMANDS
+          ]
+        });
+  }
+
   return responseBuilder.speak(speechOutput)
     .reprompt(repromptText)
     .withSimpleCard(requestAttributes.t('GAME_NAME'), repromptText)
@@ -181,6 +282,7 @@ function startGame(newGame, handlerInput) {
     ? requestAttributes.t('NEW_GAME_MESSAGE', requestAttributes.t('GAME_NAME'))
       + requestAttributes.t('WELCOME_MESSAGE', GAME_LENGTH.toString())
     : '';
+  let aplFirstPageSpeechOutput = speechOutput;
   const translatedQuestions = requestAttributes.t('QUESTIONS');
   const gameQuestions = populateGameQuestions(translatedQuestions);
   const correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
@@ -194,8 +296,9 @@ function startGame(newGame, handlerInput) {
   const currentQuestionIndex = 0;
   const spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
   let repromptText = requestAttributes.t('TELL_QUESTION_MESSAGE', '1', spokenQuestion);
+
   for (let i = 0; i < ANSWER_COUNT; i += 1) {
-    repromptText += `${i + 1}. ${roundAnswers[i]}. `;
+    repromptText += `${i + 1}.  ${roundAnswers[i]}. `;
   }
 
   speechOutput += repromptText;
@@ -215,6 +318,31 @@ function startGame(newGame, handlerInput) {
 
   handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
 
+  if (supportsDisplay(handlerInput)) {
+    let payload = {
+      "phrase": makePage(aplFirstPageSpeechOutput,"",`<speak>${aplFirstPageSpeechOutput}</speak>`,firstTransformerList),
+      "nextPhrase": makePage(repromptText,"",`<speak>${repromptText}</speak>`,secondTransformerList)};
+    speechOutput = "";
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.1',
+        document : APL_DOC  ,
+        datasources : payload ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            TWO_PAGER_COMMANDS
+          ]
+        });
+  }
+
   return handlerInput.responseBuilder
     .speak(speechOutput)
     .reprompt(repromptText)
@@ -227,8 +355,35 @@ function helpTheUser(newGame, handlerInput) {
   const askMessage = newGame
     ? requestAttributes.t('ASK_MESSAGE_START')
     : requestAttributes.t('REPEAT_QUESTION_MESSAGE') + requestAttributes.t('STOP_MESSAGE');
-  const speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
+  let speechOutput = requestAttributes.t('HELP_MESSAGE', GAME_LENGTH) + askMessage;
   const repromptText = requestAttributes.t('HELP_REPROMPT') + askMessage;
+
+  if (supportsDisplay(handlerInput)) {
+    let payload = {
+        "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+    speechOutput = "";
+
+    handlerInput.responseBuilder
+    .addDirective( 
+      {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        version: '1.1',
+        document : APL_DOC  ,
+        datasources : payload ,
+        token : TOKEN_ID ,
+      })
+      .addDirective (
+        {
+          type: 'Alexa.Presentation.APL.ExecuteCommands',
+          token : TOKEN_ID ,
+          commands :
+          [
+            ONE_PAGER_COMMANDS
+          ]
+        });
+  }
 
   return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
 }
@@ -386,20 +541,100 @@ const UnhandledIntent = {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
     if (Object.keys(sessionAttributes).length === 0) {
-      const speechOutput = requestAttributes.t('START_UNHANDLED');
+      let speechOutput = requestAttributes.t('START_UNHANDLED');
+      let repromptText = speechOutput;
+      if (supportsDisplay(handlerInput)) {
+        let payload = {
+          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+          };
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.1',
+            document : APL_DOC  ,
+            datasources : payload ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            });
+      }
       return handlerInput.attributesManager
         .speak(speechOutput)
-        .reprompt(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     } else if (sessionAttributes.questions) {
       const speechOutput = requestAttributes.t('TRIVIA_UNHANDLED', ANSWER_COUNT.toString());
+      const repromptText = speechOutput;
+      if (supportsDisplay(handlerInput)) {
+        let payload = {
+          "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+          };
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.1',
+            document : APL_DOC  ,
+            datasources : payload ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            });
+      }
       return handlerInput.responseBuilder
         .speak(speechOutput)
-        .reprompt(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     }
-    const speechOutput = requestAttributes.t('HELP_UNHANDLED');
-    return handlerInput.responseBuilder.speak(speechOutput).reprompt(speechOutput).getResponse();
+    let speechOutput = requestAttributes.t('HELP_UNHANDLED');
+    const repromptText = speechOutput;
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+      };
+      speechOutput = "";
+      handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.1',
+            document : APL_DOC  ,
+            datasources : payload ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            });
+    }
+    return handlerInput.responseBuilder.speak(speechOutput).reprompt(repromptText).getResponse();
   },
 };
 
@@ -435,8 +670,37 @@ const RepeatIntent = {
   },
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-    return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
-      .reprompt(sessionAttributes.repromptText)
+    let speechOutput = sessionAttributes.speechOutput;
+    let repromptText = sessionAttributes.repromptText;
+    if (supportsDisplay(handlerInput)) {
+        let payload = {
+          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+        speechOutput = "";
+
+      handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.1',
+            document : APL_DOC  ,
+            datasources : payload ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            });
+    }
+    
+    return handlerInput.responseBuilder.speak(speechOutput)
+      .reprompt(repromptText)
       .getResponse();
   },
 };
@@ -448,9 +712,38 @@ const YesIntent = {
   },
   handle(handlerInput) {
     const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+    let speechOutput = sessionAttributes.speechOutput;
+    let repromptText = sessionAttributes.repromptText;
     if (sessionAttributes.questions) {
-      return handlerInput.responseBuilder.speak(sessionAttributes.speechOutput)
-        .reprompt(sessionAttributes.repromptText)
+      if (supportsDisplay(handlerInput)) {
+        let payload = {
+          "phrase": makePage(speechOutput,repromptText,`<speak>${speechOutput}</speak>`,firstTransformerList),
+          "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+        speechOutput = "";
+
+        handlerInput.responseBuilder
+        .addDirective( 
+          {
+            type: 'Alexa.Presentation.APL.RenderDocument',
+            version: '1.1',
+            document : APL_DOC  ,
+            datasources : payload ,
+            token : TOKEN_ID ,
+          })
+          .addDirective (
+            {
+              type: 'Alexa.Presentation.APL.ExecuteCommands',
+              token : TOKEN_ID ,
+              commands :
+              [
+                ONE_PAGER_COMMANDS
+              ]
+            });
+      }
+      
+      return handlerInput.responseBuilder.speak(speechOutput)
+        .reprompt(repromptText)
         .getResponse();
     }
     return startGame(false, handlerInput);
@@ -465,8 +758,33 @@ const StopIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('QUIT_MESSAGE');
+    let speechOutput = requestAttributes.t('QUIT_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+      speechOutput = "";
 
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.1',
+          document : APL_DOC  ,
+          datasources : payload ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          });
+    }
     return handlerInput.responseBuilder.speak(speechOutput)
       .getResponse();
   },
@@ -479,8 +797,32 @@ const CancelIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('CANCEL_MESSAGE');
-
+    let speechOutput = requestAttributes.t('CANCEL_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.1',
+          document : APL_DOC  ,
+          datasources : payload ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          }); 
+    }
     return handlerInput.responseBuilder.speak(speechOutput)
       .getResponse();
   },
@@ -493,7 +835,32 @@ const NoIntent = {
   },
   handle(handlerInput) {
     const requestAttributes = handlerInput.attributesManager.getRequestAttributes();
-    const speechOutput = requestAttributes.t('NO_MESSAGE');
+    let speechOutput = requestAttributes.t('NO_MESSAGE');
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+        "phrase": makePage(speechOutput,"",`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.1',
+          document : APL_DOC  ,
+          datasources : payload ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              ONE_PAGER_COMMANDS
+            ]
+          });
+    }
     return handlerInput.responseBuilder.speak(speechOutput).getResponse();
   },
 };
@@ -504,10 +871,36 @@ const ErrorHandler = {
   },
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`);
-
+    let speechOutput = 'Sorry, I can\'t understand the command. Please say again.';
+    const repromptText = speechOutput;
+    if (supportsDisplay(handlerInput)) {
+      let payload = {
+        "phrase": makePage(speechOutput,speechOutput,`<speak>${speechOutput}</speak>`,firstTransformerList),
+        "nextPhrase": makePage("none","<speak></speak>","<speak></speak>",secondTransformerList)
+        };
+      speechOutput = "";
+      handlerInput.responseBuilder
+      .addDirective( 
+        {
+          type: 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.1',
+          document : APL_DOC  ,
+          datasources : payload ,
+          token : TOKEN_ID ,
+        })
+        .addDirective (
+          {
+            type: 'Alexa.Presentation.APL.ExecuteCommands',
+            token : TOKEN_ID ,
+            commands :
+            [
+              TWO_PAGER_COMMANDS
+            ]
+          });
+    }
     return handlerInput.responseBuilder
-      .speak('Sorry, I can\'t understand the command. Please say again.')
-      .reprompt('Sorry, I can\'t understand the command. Please say again.')
+      .speak(speechOutput)
+      .reprompt(repromptText)
       .getResponse();
   },
 };
