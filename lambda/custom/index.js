@@ -35,8 +35,7 @@ function makePage(phraseText="",repromptText="",phraseSSMLProperty="",transforme
     "phraseText" : phraseText ,
     "repromptText":repromptText,
     "properties" :  {
-      "phraseSsml" : phraseSSMLProperty,
-      "logoUrl": ""
+      "phraseSsml" : phraseSSMLProperty
     },
     "transformers": transformerList
   };
