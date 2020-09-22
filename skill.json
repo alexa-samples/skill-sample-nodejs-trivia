@@ -11,6 +11,16 @@
           ],
           "name": "reindeer trivia",
           "description": "Sample Full Description"
+        },
+        "es-MX": {
+          "summary": "Sample Short Description",
+          "examplePhrases": [
+            "Alexa abre reindeer trivia",
+            "Alexa dile a reindeer trivia que comience un juego",
+            "Alexa dile a reindeer trivia que quiero jugar"
+          ],
+          "name": "reindeer trivia",
+          "description": "Sample Full Description"
         }
       },
       "isAvailableWorldwide": true,
