@@ -1,0 +1,77 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "reindeer trivia",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerIntent",
+          "samples": [
+            "la respuesta es {Answer}",
+            "mi respuesta es {Answer}",
+            "es {Answer}",
+            "{Answer} es mi respuesta",
+            "{Answer}"
+          ],
+          "slots": [
+            {
+              "name": "Answer",
+              "type": "AMAZON.NUMBER",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "DontKnowIntent",
+          "samples": [
+            "no lo sé",
+            "no se",
+            "no me se esa",
+            "desconozco",
+            "paso",
+            "no me se eso",
+            "quien sabe",
+            "no se esta pregunta",
+            "no se esa pregunta"
+          ],
+          "slots": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "empezar juego",
+            "nuevo juego",
+            "comenzar",
+            "iniciar",
+            "empezar",
+            "empezar nuevo juego"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        }
+      ]
+    }
+  }
+}
