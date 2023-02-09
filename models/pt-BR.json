@@ -1,0 +1,73 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "jogo das renas",
+      "intents": [
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AnswerIntent",
+          "samples": [
+            "a resposta é {Answer}",
+            "minha resposta é {Answer}",
+            "é {Answer}",
+            "{Answer} é minha resposta",
+            "{Answer}"
+          ],
+          "slots": [
+            {
+              "name": "Answer",
+              "type": "AMAZON.NUMBER",
+              "samples": []
+            }
+          ]
+        },
+        {
+          "name": "DontKnowIntent",
+          "samples": [
+            "não sei",
+            "humn. não sei",
+            "não sei essa",
+            "uara",
+            "pulo",
+            "quem sabe",
+            "não sei a resposta"
+          ],
+          "slots": []
+        },
+        {
+          "name": "AMAZON.StartOverIntent",
+          "samples": [
+            "iniciar jogo",
+            "novo jogo",
+            "jogar",
+            "iniciar novo jogo"
+          ]
+        },
+        {
+          "name": "AMAZON.RepeatIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        }
+      ]
+    }
+  }
+}

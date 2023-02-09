@@ -752,4 +752,253 @@ module.exports = {
       ],
     },
   ],
+  QUESTIONS_PT_BR: [
+    {
+      'As renas têm casacos muito grossos, quantos pêlos por polegada quadrada elas têm?': [
+        '13,000',
+        '1,200',
+        '5,000',
+        '700',
+        '1,000',
+        '120,000',
+      ],
+    },
+    {
+      'O clássico Rudolph The Red Nosed Reindeer de 1964 foi filmado onde?': [
+        'Japão',
+        'Estados Unidos',
+        'Finlândia',
+        'Alemanha',
+        'Canadá',
+        'Noruega',
+        'França',
+      ],
+    },
+    {
+      'As renas do Papai Noel são cuidadas por um dos elfos de Natal, como é o nome dele?': [
+        'Wunorse Openslae',
+        'Alabaster Snowball',
+        'Bushy Evergreen',
+        'Pepper Minstix',
+      ],
+    },
+    {
+      'Se todas as renas do Papai Noel tivessem chifres enquanto puxavam seu trenó de Natal, todas seriam': [
+        'Fêmeas',
+        'Machos',
+        'Fêmeas e machos',
+        'Não tem como saber',
+      ],
+    },
+    {
+      'O que as renas comem?': [
+        'Líquen',
+        'Gramíneas',
+        'Folhas',
+        'Frutos',
+      ],
+    },
+    {
+      'Qual das alternativas a seguir não é verdadeira?': [
+        'O caribu vive em todos os continentes',
+        'Rena e Caribu são da mesma espécie',
+        'O caribu é maior que a rena',
+        'Renas vivem na Escandinávia e Rússia',
+      ],
+    },
+    {
+      'Em que ano Rudolph fez sua estréia na televisão?': [
+        '1964',
+        '1979',
+        '2000',
+        '1956',
+      ],
+    },
+    {
+      'De quem era a voz de Rudolph no clássico de 1964?': [
+        'Billie Mae Richards',
+        'Burl Ives',
+        'Paul Soles',
+        'Lady Gaga',
+      ],
+    },
+    {
+      'Em 1939, qual varejista usou a história de Rudolph, a Rena do Nariz Vermelho?': [
+        'Montgomery Ward',
+        'Sears',
+        'Macys',
+        'Kmart',
+      ],
+    },
+    {
+      'As renas do Papai Noel chamadas Donner eram originalmente chamadas de quê?': [
+        'Dunder',
+        'Donny',
+        'Dweedle',
+        'Dreamy',
+      ],
+    },
+    {
+      'Quem inventou a história de Rudolph?': [
+        'Robert May',
+        'Johnny Marks',
+        'Santa',
+        'J K  Rowling',
+      ],
+    },
+    {
+      'Em que local você não encontrará renas?': [
+        'Polo Norte',
+        'Lapónia',
+        'Montanha Korvatunturi',
+        'Finlândia',
+      ],
+    },
+    {
+      'O que faz as renas do Papai Noel voarem?': [
+        'Poeira mágica das renas',
+        'Fusão',
+        'Amanita muscaria',
+        'Elfos',
+      ],
+    },
+    {
+      'Incluindo Rudolph, quantos cascos de renas existem?': [
+        '36',
+        '24',
+        '16',
+        '8',
+      ],
+    },
+    {
+      'Papai Noel tem apenas uma rena fêmea, qual é??': [
+        'Vixen',
+        'Clarice',
+        'Cupid',
+        'Cupid',
+      ],
+    },
+    {
+      'No clássico de 1964, Rudolph The Red Nosed Reindeer, qual era o nome dos narradores dos bonecos de neve?': [
+        'Sam',
+        'Frosty',
+        'Burl',
+        'Snowy',
+      ],
+    },
+    {
+      'Qual era o nome do pai de Rudolph?': [
+        'Donner',
+        'Dasher',
+        'Blixen',
+        'Comet',
+      ],
+    },
+    {
+      'No filme de 1964, qual era o nome do treinador dos Jogos das Renas?': [
+        'Comet',
+        'Blixen',
+        'Donner',
+        'Dasher',
+      ],
+    },
+    {
+      'No filme de 1964, qual é o nome do cervo que Rudolph faz amizade nos jogos de renas?': [
+        'Fireball',
+        'Clarice',
+        'Jumper',
+        'Vixen',
+      ],
+    },
+    {
+      'No filme de 1964, como Donner, pai de Rudolph, tentou esconder o nariz de Rudolph?': [
+        'Lama negra',
+        'Bolsa',
+        'Fronha',
+        'Meia',
+      ],
+    },
+    {
+      'No filme de 1964, o que o Elfo Desajustado quer ser em vez de um Elfo de Papai Noel?': [
+        'Dentista',
+        'Rena',
+        'Fabricante de brinquedo',
+        'Fabricante de castiçal',
+      ],
+    },
+    {
+      'No filme de 1964, qual era a única fraqueza do Bumble?': [
+        'Não sabia nadar',
+        'Sempre faminto',
+        'Bastões de doces',
+        'Vesgo',
+      ],
+    },
+    {
+      'No filme de 1964, o que Yukon Cornelius realmente procura??': [
+        'Hortelã-pimenta',
+        'Ouro',
+        'Índia',
+        'Ursos polares',
+      ],
+    },
+    {
+      'No filme de 1964, por que o trem está na Ilha dos Brinquedos Desajustados?': [
+        'Rodas quadradas',
+        'Sem motor',
+        'A pintura não corresponde',
+        'Não apita',
+      ],
+    },
+    {
+      'No filme de 1964, qual é o nome de Jack in the Box?': [
+        'Charlie',
+        'Sam',
+        'Billy',
+        'Jack',
+      ],
+    },
+    {
+      'No filme de 1964, por que o Papai Noel quase cancelou o Natal?': [
+        'Tempestade',
+        'Sem neve',
+        'Sem brinquedos',
+        'As renas estavam doentes',
+      ],
+    },
+    {
+      'No filme de 1964, que barulho animal o elfo fez para distrair o Bumble?': [
+        'Grunhido',
+        'Rosnado',
+        'Latido',
+        'Miado',
+      ],
+    },
+    {
+      'No filme de 1964, qual é o nome do garimpeiro?': [
+        'Yukon Cornelius',
+        'Slider Sam',
+        'Bumble',
+        'Jack',
+      ],
+    },
+    {
+      'Quão longe as renas viajam quando migram?': [
+        '4800 quilômetros',
+        '1100 quilômetros',
+        '800 quilômetros',
+        '0 quilômetros',
+      ],
+    },
+    {
+      'Quão rápido uma rena pode correr?': [
+        '77 quilômetros por hora',
+        '27 quilômetros por hora',
+        '30 quilômetros por hora',
+        '22 quilômetros por hora',
+        '83 quilômetros por hora',
+        '65 quilômetros por hora',
+      ],
+    },
+  ],
 };

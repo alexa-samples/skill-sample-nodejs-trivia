@@ -1,5 +1,5 @@
 {
-  "skillManifest": {
+  "manifest": {
     "publishingInformation": {
       "locales": {
         "en-US": {
@@ -11,6 +11,16 @@
           ],
           "name": "reindeer trivia",
           "description": "Sample Full Description"
+        },
+        "pt-BR": {
+          "summary": "Jogo das renas",
+          "examplePhrases": [
+            "Alexa abrir jogo das renas",
+            "Alexa diga ao jogo das renas para iniciar o jogo",
+            "Alexa diga ao jogo das renas que eu quero jogar"
+          ],
+          "name": "jogo das renas",
+          "description": "Jogo das renas é um jogo de perguntas e respostas para se divertir com a família"
         }
       },
       "isAvailableWorldwide": true,
