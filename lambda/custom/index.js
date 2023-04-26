@@ -111,15 +111,15 @@ function populateRoundAnswers(
 }
 
 function isAnswerSlotValid(intent) {
-  const answerSlotFilled = intent
-    && intent.slots
-    && intent.slots.Answer
-    && intent.slots.Answer.value;
-  const answerSlotIsInt = answerSlotFilled
-    && !Number.isNaN(parseInt(intent.slots.Answer.value, 10));
-  return answerSlotIsInt
-    && parseInt(intent.slots.Answer.value, 10) < (ANSWER_COUNT + 1)
-    && parseInt(intent.slots.Answer.value, 10) > 0;
+    const answerSlotFilled = intent
+        && intent.slots
+        && intent.slots.item
+        && intent.slots.item.value;
+    const answerSlotIsInt = answerSlotFilled
+        && !Number.isNaN(parseInt(intent.slots.item.value, 10));
+    return answerSlotIsInt
+        && parseInt(intent.slots.item.value, 10) < (ANSWER_COUNT + 1)
+        && parseInt(intent.slots.item.value, 10) > 0;
 }
 
 function handleUserGuess(userGaveUp, handlerInput) {
@@ -142,21 +142,21 @@ function handleUserGuess(userGaveUp, handlerInput) {
   const translatedQuestions = requestAttributes.t('QUESTIONS');
 
 
-  if (answerSlotValid
-    && parseInt(intent.slots.Answer.value, 10) === sessionAttributes.correctAnswerIndex) {
-    currentScore += 1;
-    speechOutputAnalysis = requestAttributes.t('ANSWER_CORRECT_MESSAGE');
-  } else {
-    if (!userGaveUp) {
-      speechOutputAnalysis = requestAttributes.t('ANSWER_WRONG_MESSAGE');
-    }
+    if (answerSlotValid
+        && parseInt(intent.slots.item.value, 10) === sessionAttributes.correctAnswerIndex) {
+        currentScore += 1;
+        speechOutputAnalysis = requestAttributes.t('ANSWER_CORRECT_MESSAGE');
+    } else {
+        if (!userGaveUp) {
+            speechOutputAnalysis = requestAttributes.t('ANSWER_WRONG_MESSAGE');
+        }
 
-    speechOutputAnalysis += requestAttributes.t(
-      'CORRECT_ANSWER_MESSAGE',
-      correctAnswerIndex,
-      correctAnswerText
-    );
-  }
+        speechOutputAnalysis += requestAttributes.t(
+            'CORRECT_ANSWER_MESSAGE',
+            correctAnswerIndex,
+            correctAnswerText
+        );
+    }
 
   // Check if we can exit the game session after GAME_LENGTH questions (zero-indexed)
   if (sessionAttributes.currentQuestionIndex === GAME_LENGTH - 1) {
