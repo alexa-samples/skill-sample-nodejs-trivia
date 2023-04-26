@@ -128,7 +128,7 @@ module.exports = {
         'Vixen',
         'Clarice',
         'Cupid',
-        'Cupid',
+        'Agnes',
       ],
     },
     {
